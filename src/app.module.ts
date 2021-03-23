@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from './player/entities/player.entity';
+import { PlayerController } from './player/player.controller';
+import { PlayerService } from './player/player.service';
+import { PlayerModule } from './player/player.module';
+import { Repository } from 'typeorm';
 
 @Module({
   imports: [
@@ -16,8 +20,7 @@ import { Player } from './player/entities/player.entity';
       entities: [Player],
       synchronize: true,
     }),
+    PlayerModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

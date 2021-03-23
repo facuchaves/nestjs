@@ -12,14 +12,13 @@ export class PlayerService {
     private playerRepository: Repository<Player>,
   ) {}
 
-  getPlayers(): PlayerDto[] {
-    const mockPlayers = [{
-      name: 'Pablo',
-      score: 55,
-    }]
-
-    const players = this.playerRepository.find()
-
-    return mockPlayers;
+  getPlayers(): Promise<Player[]> {
+    return this.playerRepository.find()
   }
+
+  async getPlayersById(playerIdToSearch : number): Promise<PlayerDto> {
+    const players = await this.getPlayers()
+    return players.find( player => player.id == playerIdToSearch)
+  }
+
 }
