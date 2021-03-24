@@ -7,7 +7,12 @@ export class PlayerDto {
     @IsString()
     name: string
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'The score of a player',
+        type: Number,
+        minimum: 0,
+        maximum : 100,
+    })
     @IsInt()
     @Min(0)
     @Max(100)

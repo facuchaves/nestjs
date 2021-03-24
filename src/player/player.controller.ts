@@ -12,6 +12,7 @@ export class PlayerController {
   @ApiOkResponse({
     description: 'La lista fue consultada con exito.',
     type: PlayerDto,
+    isArray: true
   })
   @ApiOperation({
     summary: 'Devuelve una lista de jugadores',
