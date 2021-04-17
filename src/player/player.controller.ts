@@ -1,12 +1,15 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PlayerService } from './player.service';
 import { PlayerDto } from './dtos/player.dto';
 
 @ApiTags('players')
 @Controller('api/players')
+@UseInterceptors(CacheInterceptor)
 export class PlayerController {
-  constructor(private readonly playerService: PlayerService) {}
+  constructor(
+    private readonly playerService: PlayerService
+    ) {}
 
   @Get()
   @ApiOkResponse({
@@ -18,7 +21,10 @@ export class PlayerController {
     summary: 'Devuelve una lista de jugadores',
     description: 'Devuelve una lista de todos los jugadores. Si no hay jugadores devuelve una lista vacia',
   })
+  @CacheKey('custom_key')
+  @CacheTTL(20)
   getAllPlayers(): Promise<PlayerDto[]> {
+    //const value = this.cacheManager.get('players');
     return this.playerService.getAllPlayers();
   }
 
