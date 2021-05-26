@@ -1,8 +1,8 @@
 import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Player } from './player/entities/player.entity';
-import { PlayerModule } from './player/player.module';
+import { GenericEntity } from './entity/entities/generic-entity.entity';
+import { EntityModule } from './entity/entity.module';
 
 @Module({
   imports: [
@@ -13,10 +13,10 @@ import { PlayerModule } from './player/player.module';
       username: 'root',
       password: 'root',
       database: 'test',
-      entities: [Player],
+      entities: [GenericEntity],
       synchronize: true,
     }),
-    PlayerModule,
+    EntityModule,
     CacheModule.register()
   ],
   providers: []

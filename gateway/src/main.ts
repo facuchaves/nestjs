@@ -6,10 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   const config = new DocumentBuilder()
-  .setTitle('Players example')
-  .setDescription('This is an api that is used to query players, scores and statics.')
+  .setTitle('CRUDX Example')
+  .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
-  .addTag('players')
+  .addTag('Recourses')
   .build();
 
   const document = SwaggerModule.createDocument(app, config);
