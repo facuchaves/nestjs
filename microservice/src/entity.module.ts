@@ -9,13 +9,14 @@ import { EntityService } from './entity.service';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: '34.71.146.188',
       port: 3306,
       username: 'root',
       password: 'root',
       database: 'test',
       entities: [GenericEntity],
       synchronize: true,
+      socketPath:'/cloudsql/nodejs-nest:us-central1:generic-bbdd'
     }),
     TypeOrmModule.forFeature([GenericEntity]),
     CacheModule.register(),
