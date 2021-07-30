@@ -4,17 +4,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EntityDto } from './dtos/entity.dto';
 import { GenericEntity } from './entities/generic-entity.entity';
+import { GenericEntityRepository } from './entity.repository';
 
 @Injectable()
 export class EntityService {
   
   constructor(
     @Inject('ENTITY_SERVICE') private client: ClientProxy,
+    // @InjectRepository(GenericEntityRepository)
+    // private genericEntityRepository: GenericEntityRepository,
     ) {}
   
-  getAllEntities(): Promise<GenericEntity[]> {
-    const pattern = { cmd: 'get_all_entities' };
-    return this.client.send<GenericEntity[]>(pattern,{}).toPromise();
+  async getAllEntities(): Promise<GenericEntity[]> {
+    return [{
+      id: 1,
+      name: 'Nombre',
+      score: 78}]
+    // const pattern = { cmd: 'get_all_entities' };
+    // return this.client.send<GenericEntity[]>(pattern,{}).toPromise();
+    // return this.genericEntityRepository.find()
   }
   
   async getEntityById(entityIdToSearch : number): Promise<EntityDto> {

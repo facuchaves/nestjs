@@ -9,11 +9,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['NestJsApplication'],
+  app_name: ['APIRest-Nest-GCP'],
   /**
    * Your New Relic license key.
    */
-  license_key: '8c85591199d705218a0d4fe0ca8491842a8dNRAL',
+  license_key: '6b22fae37dc338fe76c0dbdeb46954e1FFFFNRAL',
 
   /**
    * This setting controls distributed tracing.
@@ -37,7 +37,7 @@ exports.config = {
      * issues with the agent, 'info' and higher will impose the least overhead on
      * production applications.
      */
-    level: 'info'
+    level: 'trace'
   },
   /**
    * When true, all request headers except for those listed in attributes.exclude

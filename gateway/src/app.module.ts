@@ -6,17 +6,18 @@ import { EntityModule } from './entity/entity.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '34.71.146.188',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
-      entities: [GenericEntity],
-      synchronize: true,
-      socketPath:'/cloudsql/nodejs-nest:us-central1:generic-bbdd'
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: '10.24.80.4',//'34.71.146.188',
+    //   extra: {
+    //        socketPath: '/cloudsql/nodejs-nest:us-central1:generic-bbdd'
+    //   },
+    //   username: 'root',
+    //   password: 'root',
+    //   database: 'test',
+    //   entities: [GenericEntity],
+    //   synchronize: true,
+    // }),
     EntityModule,
     CacheModule.register()
   ],

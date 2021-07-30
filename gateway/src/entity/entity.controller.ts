@@ -2,6 +2,8 @@ import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, In
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
+import { MessagePattern } from '@nestjs/microservices';
+import { GenericEntity } from './entities/generic-entity.entity';
 
 @ApiTags('resource')
 @Controller('api/resource')
@@ -89,6 +91,14 @@ export class EntityController {
     @Param('resourceId') entityId: number
     ) {
     return this.service.deleteEntityById(entityId);
+  }
+
+  @MessagePattern({ cmd: 'get_all_entities' })
+  getAllEntities(): Promise<GenericEntity[]> {
+    //const value = this.cacheManager.get('entities');
+    return new Promise((resolve, reject) => {
+      resolve([{id:  1 , name: 'Jose Microservicio' , score: 99}]);
+   });//this.entityService.getAllEntities();
   }
 
 }

@@ -5,12 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenericEntity } from './entities/generic-entity.entity';
 import { Repository } from 'typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ENTITY_MICROSERVICE_NAME } from './entity.constans';
 //import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([GenericEntity]),
-    Repository,
+    // TypeOrmModule.forFeature([GenericEntity]),
+    //Repository,
     CacheModule.register()
   /*   CacheModule.register({
       store: redisStore,
@@ -19,7 +20,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }) */
     ,
     ClientsModule.register([
-      { name: 'ENTITY_SERVICE', transport: Transport.TCP },
+      { 
+        name: ENTITY_MICROSERVICE_NAME, 
+        transport: Transport.TCP, 
+        options: {
+          host : process.env.MICROSERVICE_HOST,
+          port: parseInt(process.env.MICROSERVICE_POST),
+        } 
+    },
     ]),
   ],
   controllers: [EntityController],

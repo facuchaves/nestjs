@@ -13,4 +13,5 @@
 
 # [START app_yaml]
 runtime: nodejs14
+service: apirest-nest
 # [END app_yaml]
