@@ -31,8 +31,6 @@ import { ENTITY_MICROSERVICE_NAME } from './entity.constans';
     ]),
   ],
   controllers: [EntityController],
-  providers: [
-    EntityService,
-  ],
+  providers: [EntityService],
 })
 export class EntityModule {}

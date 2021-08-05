@@ -4,13 +4,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EntityDto } from './dtos/entity.dto';
 import { GenericEntity } from './entities/generic-entity.entity';
+import { ENTITY_MICROSERVICE_NAME } from './entity.constans';
 import { GenericEntityRepository } from './entity.repository';
 
 @Injectable()
 export class EntityService {
   
   constructor(
-    @Inject('ENTITY_SERVICE') private client: ClientProxy,
+    @Inject(ENTITY_MICROSERVICE_NAME) private client: ClientProxy,
     // @InjectRepository(GenericEntityRepository)
     // private genericEntityRepository: GenericEntityRepository,
     ) {}
