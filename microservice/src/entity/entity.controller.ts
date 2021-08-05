@@ -16,7 +16,10 @@ export class EntityController {
   @MessagePattern({ cmd: 'get_all_entities' })
   getAllEntities(): Promise<GenericEntity[]> {
     //const value = this.cacheManager.get('entities');
-    return this.entityService.getAllEntities();
+    console.log("pasa por microservicio aislado")
+    return new Promise((resolve, reject) => {
+      resolve([{id:  1 , name: 'Jose aisladito' , score: 99}]);
+   });//this.entityService.getAllEntities();
   }
 
   @MessagePattern({ cmd: 'get_entity_by_id' })

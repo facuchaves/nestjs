@@ -1,14 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
-import { EntityModule } from './entity.module';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
+  const PORT = parseInt(process.env.PORT) || 9090;
+
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    EntityModule,
+    AppModule,
     {
       transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: PORT
+      }
     },
   );
-  app.listen(() => {});
+
+  app.listen(() => {
+    console.log(`Server listening on port ${PORT}...`);
+  });
 }
 bootstrap();

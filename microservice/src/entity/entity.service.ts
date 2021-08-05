@@ -1,19 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Console } from 'node:console';
-import { Repository } from 'typeorm';
 import { GenericEntity } from './entities/generic-entity.entity';
+import { GenericEntityRepository } from './entity.repository';
 
 @Injectable()
 export class EntityService {
   
   constructor(
-    @InjectRepository(GenericEntity)
-    private genericEntityRepository: Repository<GenericEntity>,
+    // @InjectRepository(GenericEntityRepository)
+    // private genericEntityRepository: any, //GenericEntityRepository,
     ) {}
     
   getAllEntities(): Promise<GenericEntity[]> {
-    return this.genericEntityRepository.find()
+    return new Promise((resolve, reject) => {
+      resolve([{id:  1 , name: 'Jose Microservicio aislado' , score: 99}]);
+   });
+    // return new Promise( () => ([]) )
+    // return this.genericEntityRepository.find()
   }
   
   async getEntityById(entityIdToSearch : number): Promise<GenericEntity> {
@@ -22,15 +25,15 @@ export class EntityService {
   }
   
   createNewEntity = ( newEntity : GenericEntity) => {
-    this.genericEntityRepository.save([newEntity])
+    // this.genericEntityRepository.save([newEntity])
   }
   
   editEntityById(entityId: number, entityDto: GenericEntity) {
-    this.genericEntityRepository.update(entityId,entityDto)
+    // this.genericEntityRepository.update(entityId,entityDto)
   }
 
   deleteEntityById = ( entityId : number) => {
-    this.genericEntityRepository.delete(entityId)
+    // this.genericEntityRepository.delete(entityId)
   }
 
 }

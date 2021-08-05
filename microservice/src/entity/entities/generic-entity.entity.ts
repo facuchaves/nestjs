@@ -1,15 +1,15 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+// @Entity()
 export class GenericEntity {
   
-  @PrimaryGeneratedColumn()
+  // @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  // @Column()
   name: string;
 
-  @Column()
+  // @Column()
   score: number;
 
 }
