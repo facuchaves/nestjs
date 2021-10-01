@@ -4,19 +4,6 @@ phases:
   install:
     runtime-versions:
       nodejs: 12
-    commands:
-      - echo update npm...
-      - npm install -g n
-      - n latest
-      - npm update -g npm
-      - echo node -v
-      - node -v
-      - echo npm -v
-      - npm -v
-      - echo install yarn...
-      - npm install -g yarn
-      - echo yarn -v
-      - yarn -v
   build:
     commands:
       - cd gateway
