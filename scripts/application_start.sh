@@ -2,5 +2,5 @@
 
 echo application_start
 
-cd gateway
+cd ../gateway
 yarn start
