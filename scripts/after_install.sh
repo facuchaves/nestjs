@@ -6,3 +6,4 @@ cd /opt/webapp/gateway
 
 yarn
 yarn build
+yarn start
