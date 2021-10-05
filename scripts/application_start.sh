@@ -2,6 +2,6 @@
 
 echo application_start
 
-cd /opt/webapp
-ls
+cd /opt/webapp/gateway
+
 yarn start

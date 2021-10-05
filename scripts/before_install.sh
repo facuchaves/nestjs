@@ -4,5 +4,5 @@ echo before_install
 
 # Install node.js
 curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
-sudo yum install nodejs
+sudo yum -y install nodejs
 npm --version
