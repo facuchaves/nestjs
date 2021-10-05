@@ -2,9 +2,6 @@
 
 echo application_start
 
-pwd
+cd /opt
 ls
-cd ..
-ls
-cd ../gateway
 yarn start
