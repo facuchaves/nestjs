@@ -3,6 +3,6 @@
 echo before_install
 
 # Install node.js
-sudo apt-add-repository ppa:chris-lea/node.js -y
-sudo apt-get update
-sudo apt-get install nodejs -y
+curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+sudo yum install nodejs
+npm --version
