@@ -31,7 +31,7 @@ export class EntityController {
   }
 
   @Get(':resourceId')
-  @ApiParam({name: 'resourceId', required: true, description: 'Entity id to searchH...'})
+  @ApiParam({name: 'resourceId', required: true, description: 'Entity id to search'})
   @ApiOkResponse({
     description: 'Devuelve un jugador filtrado por id.',
     type: EntityDto,
@@ -64,6 +64,7 @@ export class EntityController {
   }
 
   @Put(':resourceId')
+  @ApiParam({name: 'resourceId', required: true, description: 'Entity id to update'})
   @ApiOkResponse()
   @ApiBadRequestResponse({
     description: 'Si el user con ese id no existe.',
@@ -80,6 +81,7 @@ export class EntityController {
   }
 
   @Delete(':resourceId')
+  @ApiParam({name: 'resourceId', required: true, description: 'Entity id to delete'})
   @ApiOkResponse()
   @ApiBadRequestResponse({
     description: 'Si no existe entidad con ese id no existe.',
