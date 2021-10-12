@@ -1,5 +1,5 @@
 import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
 import { MessagePattern } from '@nestjs/microservices';
@@ -31,6 +31,7 @@ export class EntityController {
   }
 
   @Get(':resourceId')
+  @ApiParam({name: 'resourceId', required: true, description: 'Entity id to searchH...'})
   @ApiOkResponse({
     description: 'Devuelve un jugador filtrado por id.',
     type: EntityDto,
@@ -72,7 +73,7 @@ export class EntityController {
     description: 'Elimina una entidad.',
   })
   async editEntity(
-    @Param('resourceId') entityId: number,
+    @Param('resourceId', ParseIntPipe) entityId: number,
     @Body() entityDto: EntityDto
     ) {
     return this.service.editEntityById(entityId,entityDto);
@@ -88,7 +89,7 @@ export class EntityController {
     description: 'Elimina un entidad.',
   })
   async deleteEntity(
-    @Param('resourceId') entityId: number
+    @Param('resourceId' , ParseIntPipe) entityId: number
     ) {
     return this.service.deleteEntityById(entityId);
   }
