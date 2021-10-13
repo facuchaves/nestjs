@@ -18,7 +18,7 @@ describe('User middleware', () => {
       const res : Response = {} as Response;
       
       userMiddleware.use({} as Request,res, () => {})
-      // NextFunction
+      
       expect(res['user']).toStrictEqual( { name: "UserNameRes" } );
     });
 
