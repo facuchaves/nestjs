@@ -1,9 +1,12 @@
 import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
 import { MessagePattern } from '@nestjs/microservices';
 import { GenericEntity } from './entities/generic-entity.entity';
+import { FilterOutputDto } from './dtos/filter-output.dto';
+import { FilterPipe } from '../pipes/filter.pipe';
+import { FilterInputDto } from './dtos/filter-input.dto';
 
 @ApiTags('resource')
 @Controller('api/resource')
@@ -104,4 +107,26 @@ export class EntityController {
    });//this.entityService.getAllEntities();
   }
 
+
+  @UsePipes(new ValidationPipe({ transform: false }))
+  @UsePipes(new FilterPipe())
+  @Post('pipe')
+  @ApiOkResponse({
+    description: 'Devuelve la transformacion hecha por el pipe.',
+    type: FilterOutputDto,
+  })
+  @ApiCreatedResponse()
+  @ApiBadRequestResponse({
+    description: 'Si un parametro no cumple con la especificacion.',
+  })
+  @ApiOperation({
+    summary: 'Uso de pipe de nestjs.',
+    description: 'Se usa un custom pipe para validar y transformar.',
+  })
+  @ApiBody({ type: FilterInputDto })
+  async validationAndTranformationPipe( 
+    @Body() filterOutputDto: FilterOutputDto
+    ) {
+      return filterOutputDto;
+  }
 }
