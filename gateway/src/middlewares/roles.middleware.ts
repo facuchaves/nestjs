@@ -2,12 +2,11 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
-export class UserMiddleware implements NestMiddleware {
+export class RolesMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log('UserMiddleware');
-    req['user'] = JSON.parse( req.headers['token'] as string )
+    console.log('RolesMiddleware');
+    req['user'] = { name: "UserNameReq" }
     res['user'] = { name: "UserNameRes" }
-    
     next();
   }
 }

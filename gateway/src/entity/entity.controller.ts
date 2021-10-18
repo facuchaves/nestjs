@@ -1,5 +1,5 @@
-import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Headers, Inject, Param, ParseIntPipe, Post, Put, SetMetadata, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
 import { MessagePattern } from '@nestjs/microservices';
@@ -7,6 +7,8 @@ import { GenericEntity } from './entities/generic-entity.entity';
 import { FilterOutputDto } from './dtos/filter-output.dto';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { FilterInputDto } from './dtos/filter-input.dto';
+import { User } from '../decorators/user.decorator';
+import { RolesGuard } from '../guards/roles.guard';
 
 @ApiTags('resource')
 @Controller('api/resource')
@@ -73,8 +75,8 @@ export class EntityController {
     description: 'Si el user con ese id no existe.',
   })
   @ApiOperation({
-    summary: 'Eliminacion de entidad',
-    description: 'Elimina una entidad.',
+    summary: 'Edicion de entidad',
+    description: 'Edicion una entidad.',
   })
   async editEntity(
     @Param('resourceId', ParseIntPipe) entityId: number,
@@ -107,7 +109,6 @@ export class EntityController {
    });//this.entityService.getAllEntities();
   }
 
-
   @UsePipes(new ValidationPipe({ transform: false }))
   @UsePipes(new FilterPipe())
   @Post('pipe')
@@ -129,4 +130,30 @@ export class EntityController {
     ) {
       return filterOutputDto;
   }
+
+  @ApiHeader({
+      name:"token",
+      description:'Informacion del usuario logeado',
+      required: true,
+      schema:{
+        default:'{ "name": "UserNameReq" , "roles": ["admin"] }'
+      }
+    })
+  @Post('middleware')
+  @ApiOkResponse({
+    description: 'Devuelve informacion procesada por un middleware.B',
+  })
+  @ApiBadRequestResponse({
+    description: 'Si un parametro no cumple con la especificacion.',
+  })
+  @ApiOperation({
+    summary: 'Uso de middleware de nestjs.',
+    description: 'Mediante un middleware se extrae informacion y se la anexa al request para lugo ser utilizada.',
+  })
+  @UseGuards(RolesGuard)
+  @SetMetadata('roles', ['admin'])
+  async middleware(@User() user) {
+      return user;
+  }
+
 }

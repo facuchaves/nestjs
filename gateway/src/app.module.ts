@@ -1,8 +1,9 @@
-import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
+import { CacheInterceptor, CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenericEntity } from './entity/entities/generic-entity.entity';
 import { EntityModule } from './entity/entity.module';
+import { UserMiddleware } from './middlewares/user.middleware';
 
 @Module({
   imports: [
@@ -23,4 +24,10 @@ import { EntityModule } from './entity/entity.module';
   ],
   providers: []
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(UserMiddleware)
+      .forRoutes('/');
+  }
+}
