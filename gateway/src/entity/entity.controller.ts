@@ -9,6 +9,7 @@ import { FilterPipe } from '../pipes/filter.pipe';
 import { FilterInputDto } from './dtos/filter-input.dto';
 import { User } from '../decorators/user.decorator';
 import { RolesGuard } from '../guards/roles.guard';
+import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
 
 @ApiTags('resource')
 @Controller('api/resource')
@@ -141,7 +142,7 @@ export class EntityController {
     })
   @Post('middleware')
   @ApiOkResponse({
-    description: 'Devuelve informacion procesada por un middleware.B',
+    description: 'Devuelve informacion procesada por un middleware.',
   })
   @ApiBadRequestResponse({
     description: 'Si un parametro no cumple con la especificacion.',
@@ -156,4 +157,12 @@ export class EntityController {
       return user;
   }
 
+@Post('interceptor')
+@ApiOkResponse({
+  description: 'Devuelve informacion procesada por un middleware.',
+})
+@UseInterceptors(LoggingInterceptor)
+async interceptor() {
+    return 'ok';
+}
 }
