@@ -1,5 +1,5 @@
 import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Headers, Inject, Param, ParseIntPipe, Post, Put, SetMetadata, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCookieAuth, ApiCreatedResponse, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
 import { MessagePattern } from '@nestjs/microservices';
@@ -157,12 +157,22 @@ export class EntityController {
       return user;
   }
 
-@Post('interceptor')
-@ApiOkResponse({
-  description: 'Devuelve informacion procesada por un middleware.',
-})
-@UseInterceptors(LoggingInterceptor)
-async interceptor() {
-    return 'ok';
-}
+  @Post('interceptor')
+  @ApiOkResponse({
+    description: 'Devuelve ok.',
+  })
+  @UseInterceptors(LoggingInterceptor)
+  async interceptor() {
+      return 'ok';
+  }
+
+  @ApiCookieAuth()
+  @Post('cookieAuth')
+  @ApiOkResponse({
+    description: 'Devuelve ok.',
+  })
+  @UseInterceptors(LoggingInterceptor)
+  async cookieAuth() {
+      return 'ok';
+  }
 }

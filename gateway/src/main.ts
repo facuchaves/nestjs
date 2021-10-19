@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Transport } from '@nestjs/microservices';
+import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 declare const module: any;
 
 async function bootstrap() {
@@ -25,6 +26,7 @@ async function bootstrap() {
   .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
   .addTag('Recourses')
+  .addCookieAuth('x-token',{ description:'here is a description, maybe can give a default value' } as SecuritySchemeObject)
   .build();
 
   const document = SwaggerModule.createDocument(app, config);
