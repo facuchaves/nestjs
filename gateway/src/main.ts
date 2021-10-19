@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Transport } from '@nestjs/microservices';
 import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import * as session from 'express-session';
 declare const module: any;
 
 async function bootstrap() {
@@ -34,6 +35,15 @@ async function bootstrap() {
 
   app.enableCors();
   
+  app.use(
+    session({
+      secret: 'my-secret',
+      resave: false,
+      saveUninitialized: false,
+      name: 'session',
+    }),
+  );
+
   const PORT = process.env.PORT || 8080;
 
   await app.listen(PORT, () => {

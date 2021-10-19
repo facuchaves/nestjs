@@ -1,4 +1,4 @@
-import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Headers, Inject, Param, ParseIntPipe, Post, Put, SetMetadata, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Headers, Inject, Param, ParseIntPipe, Post, Put, Session, SetMetadata, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiBody, ApiCookieAuth, ApiCreatedResponse, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
@@ -175,4 +175,14 @@ export class EntityController {
   async cookieAuth() {
       return 'ok';
   }
+
+  @Post('session')
+  @ApiOkResponse({
+    description: 'Devuelve ok.',
+  })
+  async session(@Session() session: Record<string, any>) {
+    session.visits = session.visits ? session.visits + 1 : 1;
+    return session.visits;
+  }
+
 }
