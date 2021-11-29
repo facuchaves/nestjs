@@ -1,4 +1,4 @@
-import { CacheInterceptor, CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { CacheInterceptor, CacheModule, Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GenericEntity } from './entity/entities/generic-entity.entity';
@@ -22,7 +22,7 @@ import { UserMiddleware } from './middlewares/user.middleware';
     EntityModule,
     CacheModule.register()
   ],
-  providers: []
+  providers: [Logger]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

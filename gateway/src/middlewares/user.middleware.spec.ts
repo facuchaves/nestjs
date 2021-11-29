@@ -1,15 +1,20 @@
 import { UserMiddleware } from './user.middleware';
 import { Request, Response, NextFunction } from 'express';
+import { Logger } from '@nestjs/common';
 
 describe('User middleware', () => {
 
-  const userMiddleware : UserMiddleware = new UserMiddleware()
+  const userMiddleware : UserMiddleware = new UserMiddleware(new Logger())
   describe('Happy paths', () => {
 
     it(`fill req`, async () => {
-      const req : Request = {} as Request;
+      const req = { 
+        headers: {
+          token: '{ "name": "UserNameReq" }'
+        } 
+      };
     
-      userMiddleware.use(req,{} as Response, () => {})
+      userMiddleware.use(req as any,{} as Response, () => {})
     
       expect(req['user']).toStrictEqual( { name: "UserNameReq" } );
     });
@@ -17,7 +22,7 @@ describe('User middleware', () => {
     it(`fill res`, async () => {
       const res : Response = {} as Response;
       
-      userMiddleware.use({} as Request,res, () => {})
+      userMiddleware.use({ headers: {} } as Request,res, () => {})
       
       expect(res['user']).toStrictEqual( { name: "UserNameRes" } );
     });
@@ -31,7 +36,7 @@ describe('User middleware', () => {
 
       const nextFunction : NextFunction = ( () => mockedObject.mockedMethod() ) as NextFunction;
       
-      userMiddleware.use({} as Request,{} as Response, nextFunction)
+      userMiddleware.use({ headers: {} } as Request,{} as Response, nextFunction)
 
       expect(funtionSpies).toBeCalledTimes(1);
 

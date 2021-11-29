@@ -5,10 +5,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Transport } from '@nestjs/microservices';
 import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
+import { Logger } from '@nestjs/common';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{
+    logger: true
+  });
   
   app.connectMicroservice({
     transport: Transport.TCP,
@@ -27,7 +31,7 @@ async function bootstrap() {
   .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
   .addTag('Recourses')
-  .addCookieAuth('x-token',{ description:'here is a description, maybe can give a default value' } as SecuritySchemeObject)
+  .addCookieAuth('x-token',{ name: 'x-token', description:'here is a description, maybe can give a default value' } as SecuritySchemeObject)
   .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -44,6 +48,9 @@ async function bootstrap() {
     }),
   );
 
+  app.use(cookieParser());
+
+  app.useLogger( new Logger() )
   const PORT = process.env.PORT || 8080;
 
   await app.listen(PORT, () => {

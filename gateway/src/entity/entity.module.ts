@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, Logger, Module } from '@nestjs/common';
 import { EntityController } from './entity.controller';
 import { EntityService } from './entity.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -31,6 +31,6 @@ import { ENTITY_MICROSERVICE_NAME } from './entity.constans';
     ]),
   ],
   controllers: [EntityController],
-  providers: [EntityService],
+    providers: [EntityService,Logger],
 })
 export class EntityModule {}

@@ -1,4 +1,4 @@
-import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Headers, Inject, Param, ParseIntPipe, Post, Put, Session, SetMetadata, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Headers, HttpException, Inject, Logger, Param, ParseIntPipe, Post, Put, Session, SetMetadata, UseFilters, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiBody, ApiCookieAuth, ApiCreatedResponse, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
@@ -9,15 +9,21 @@ import { FilterPipe } from '../pipes/filter.pipe';
 import { FilterInputDto } from './dtos/filter-input.dto';
 import { User } from '../decorators/user.decorator';
 import { RolesGuard } from '../guards/roles.guard';
-import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
+import { LoggingInterceptor } from '../interceptors/logging.interceptor';
+import { Cookies } from '../decorators/cookie.decorator';
+import { HttpExceptionFilter } from '../filters/http-exception.filter';
 
 @ApiTags('resource')
 @Controller('api/resource')
 @UseInterceptors(CacheInterceptor)
 export class EntityController {
   constructor(
-    private readonly service: EntityService
+    private readonly service: EntityService,
+    private readonly logger : Logger
     ) {}
+
+  // private readonly logger = new Logger(EntityController.name);
+
 
   @Get()
   @ApiOkResponse({
@@ -185,4 +191,30 @@ export class EntityController {
     return session.visits;
   }
 
+  @ApiCookieAuth()
+  @Post('cookie')
+  @ApiOkResponse({
+    description: 'Devuelve ok.',
+  })
+  async cookie(@Cookies('x-token') XTokenCookie: string) {
+    return XTokenCookie;
+  }
+
+  @UseFilters(new HttpExceptionFilter())
+  @Post('exceptionFilter')
+  @ApiOkResponse({
+    description: 'Manejo de excepciones.',
+  })
+  async exceptionFilter() {
+    throw new HttpException('Error',500)
+  }
+  
+
+  @Post('log')
+  @ApiOkResponse({
+    description: 'Usa el logger.',
+  })
+  async log() {
+    this.logger.log('Doing something...',EntityController.name);
+  }
 }
