@@ -98,7 +98,11 @@
       "/src/(.*)/(.*).(module|constans|repository).ts",
       "/src/(.*)/(dtos|entities)"
     ],
-    "testResultsProcessor": "jest-sonar-reporter"
+    "testResultsProcessor": "jest-sonar-reporter",
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
   },
   "jestSonar": {
     "reportPath": "coverage",

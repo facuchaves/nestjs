@@ -12,14 +12,11 @@ import * as request from 'supertest';
 describe('Entity controller', () => {
 
   let app: INestApplication;
-  let entityService: EntityService = { getAllEntities: async () => ( [ { id: 1 , name:'test', score: 50} ] ) } as EntityService;
 
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports:[EntityModule],
     })
-    .overrideProvider(EntityService)
-    .useValue(entityService)
     .compile();
 
     app = moduleRef.createNestApplication();
