@@ -7,11 +7,16 @@ import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-s
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import { Logger } from '@nestjs/common';
+const fs = require('fs')
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,{
-    logger: true
+    logger: true,
+    // httpsOptions: {
+    //   cert: fs.readFileSync('../server.cert'),
+    //   key: fs.readFileSync('../server.key')
+    // }
   });
   
   app.connectMicroservice({
@@ -31,6 +36,7 @@ async function bootstrap() {
   .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
   .addTag('Recourses')
+  .addServer('https://')
   .addCookieAuth('x-token',{ name: 'x-token', description:'here is a description, maybe can give a default value' } as SecuritySchemeObject)
   .build();
 
