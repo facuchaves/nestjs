@@ -17,12 +17,8 @@ export class EntityService {
     ) {}
   
   async getAllEntities(): Promise<GenericEntity[]> {
-    return [{
-      id: 1,
-      name: 'Nombre',
-      score: 78}]
-    // const pattern = { cmd: 'get_all_entities' };
-    // return this.client.send<GenericEntity[]>(pattern,{}).toPromise();
+    const pattern = { cmd: 'get_all_entities' };
+    return this.client.send<GenericEntity[]>(pattern,{}).toPromise();
     // return this.genericEntityRepository.find()
   }
   
