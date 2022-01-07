@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { GenericEntity } from './entities/generic-entity.entity';
 import { GenericEntityRepository } from './entity.repository';
 
@@ -7,21 +8,17 @@ import { GenericEntityRepository } from './entity.repository';
 export class EntityService {
   
   constructor(
-    // @InjectRepository(GenericEntityRepository)
-    // private genericEntityRepository: any, //GenericEntityRepository,
+    // @InjectRepository(GenericEntity)
+    private genericEntityRepository: GenericEntityRepository,//Repository<GenericEntity>,
     ) {}
     
   getAllEntities(): Promise<GenericEntity[]> {
-    return new Promise((resolve, reject) => {
-      resolve([{id:  1 , name: 'Jose Microservicio aislado' , score: 99}]);
-   });
-    // return new Promise( () => ([]) )
-    // return this.genericEntityRepository.find()
+    return this.genericEntityRepository.find()
   }
   
   async getEntityById(entityIdToSearch : number): Promise<GenericEntity> {
     const allEntities = await this.getAllEntities()
-    return allEntities.find( entity => entity.id == entityIdToSearch)
+    return allEntities.find( entity => entity.entity_id == entityIdToSearch)
   }
   
   createNewEntity = ( newEntity : GenericEntity) => {

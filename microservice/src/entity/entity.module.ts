@@ -8,10 +8,12 @@ import { EntityService } from './entity.service';
 
 @Module({
   imports: [
-    // TypeOrmModule.forFeature([GenericEntityRepository]),
+    TypeOrmModule.forFeature([GenericEntity]),
+    Repository, GenericEntity , GenericEntityRepository
     // CacheModule.register(),
   ],
   controllers: [EntityController],
-  providers: [EntityService/* , GenericEntity , GenericEntityRepository */]
+  providers: [EntityService ],
+  exports: [TypeOrmModule]
 })
 export class EntityModule {}
