@@ -108,13 +108,13 @@ export class EntityController {
     return this.service.deleteEntityById(entityId);
   }
 
-  @MessagePattern({ cmd: 'get_all_entities' })
-  getAllEntities(): Promise<GenericEntity[]> {
-    //const value = this.cacheManager.get('entities');
-    return new Promise((resolve, reject) => {
-      resolve([{id:  1 , name: 'Jose Microservicio' , score: 99}]);
-   });//this.entityService.getAllEntities();
-  }
+  // @MessagePattern({ cmd: 'get_all_entities' })
+  // getAllEntities(): Promise<GenericEntity[]> {
+  //   //const value = this.cacheManager.get('entities');
+  //   return new Promise((resolve, reject) => {
+  //     resolve([{id:  1 , name: 'Jose Microservicio' , score: 99}]);
+  //  });//this.entityService.getAllEntities();
+  // }
 
   @UsePipes(new ValidationPipe({ transform: false }))
   @UsePipes(new FilterPipe())

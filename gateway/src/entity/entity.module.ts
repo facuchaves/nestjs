@@ -24,8 +24,8 @@ import { ENTITY_MICROSERVICE_NAME } from './entity.constans';
         name: ENTITY_MICROSERVICE_NAME, 
         transport: Transport.TCP, 
         options: {
-          host : process.env.MICROSERVICE_HOST,
-          port: parseInt(process.env.MICROSERVICE_POST),
+          host : '18.217.64.115',//process.env.MICROSERVICE_HOST,
+          port: 9090//parseInt(process.env.MICROSERVICE_POST),
         } 
     },
     ]),
