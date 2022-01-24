@@ -24,19 +24,20 @@ async function bootstrap() {
     options: {
       retryAttempts: 5,
       retryDelay: 3000,
-      host: process.env.MICROSERVICE_HOST,
-      port: parseInt(process.env.MICROSERVICE_POST),
+      host: process.env.LOCAL_MICROSERVICE_HOST,
+      port: parseInt(process.env.LOCAL_MICROSERVICE_POST),
     },
   });
 
   await app.startAllMicroservicesAsync();
 
   const config = new DocumentBuilder()
-  .setTitle('CRUDX Exampleeeeeeeeeeeeeeee')
+  .setTitle('CRUDX Example')
   .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
   .addTag('Recourses')
-  .addServer('https://')
+  // .addServer('https://')
+  // .addServer('http://')
   .addCookieAuth('x-token',{ name: 'x-token', description:'here is a description, maybe can give a default value' } as SecuritySchemeObject)
   .build();
 

@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { GenericEntity } from './entities/generic-entity.entity';
 import { GenericEntityRepository } from './entity.repository';
 
@@ -8,8 +6,7 @@ import { GenericEntityRepository } from './entity.repository';
 export class EntityService {
   
   constructor(
-    // @InjectRepository(GenericEntity)
-    private genericEntityRepository: GenericEntityRepository,//Repository<GenericEntity>,
+    private genericEntityRepository: GenericEntityRepository,
     ) {}
     
   getAllEntities(): Promise<GenericEntity[]> {
@@ -22,15 +19,15 @@ export class EntityService {
   }
   
   createNewEntity = ( newEntity : GenericEntity) => {
-    // this.genericEntityRepository.save([newEntity])
+    this.genericEntityRepository.save([newEntity])
   }
   
   editEntityById(entityId: number, entityDto: GenericEntity) {
-    // this.genericEntityRepository.update(entityId,entityDto)
+    this.genericEntityRepository.update(entityId,entityDto)
   }
 
   deleteEntityById = ( entityId : number) => {
-    // this.genericEntityRepository.delete(entityId)
+    this.genericEntityRepository.delete(entityId)
   }
 
 }

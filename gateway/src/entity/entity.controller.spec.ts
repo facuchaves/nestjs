@@ -3,7 +3,7 @@ import { ClientProxy, ClientsModule } from '@nestjs/microservices';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Observable } from 'rxjs';
 import { EntityDto } from './dtos/entity.dto';
-import { GenericEntity } from './entities/generic-entity.entity';
+// import { GenericEntity } from './entities/generic-entity.entity';
 import { EntityController } from './entity.controller';
 import { EntityModule } from './entity.module';
 import { EntityService } from './entity.service';

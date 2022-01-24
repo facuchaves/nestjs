@@ -3,7 +3,6 @@ import { ApiBadRequestResponse, ApiBody, ApiCookieAuth, ApiCreatedResponse, ApiH
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
 import { MessagePattern } from '@nestjs/microservices';
-import { GenericEntity } from './entities/generic-entity.entity';
 import { FilterOutputDto } from './dtos/filter-output.dto';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { FilterInputDto } from './dtos/filter-input.dto';
@@ -24,7 +23,6 @@ export class EntityController {
 
   // private readonly logger = new Logger(EntityController.name);
 
-
   @Get()
   @ApiOkResponse({
     description: 'La lista fue consultada con exito.',
@@ -37,10 +35,13 @@ export class EntityController {
   })
   @CacheKey('custom_key')
   @CacheTTL(20)
-  getAllPlayers(): Promise<EntityDto[]> {
+  getAllEntities(): Promise<EntityDto[]> {
     //const value = this.cacheManager.get('entities');
     return this.service.getAllEntities();
   }
+
+
+
 
   @Get(':resourceId')
   @ApiParam({name: 'resourceId', required: true, description: 'Entity id to search'})
@@ -59,6 +60,9 @@ export class EntityController {
     return this.service.getEntityById(entityId);
   }
 
+
+
+
   @UsePipes(new ValidationPipe({ transform: true }))
   @Post()
   @ApiCreatedResponse()
@@ -74,6 +78,10 @@ export class EntityController {
     ) {
     return this.service.createNewEntity(entityDto);
   }
+
+
+
+
 
   @Put(':resourceId')
   @ApiParam({name: 'resourceId', required: true, description: 'Entity id to update'})
@@ -92,6 +100,10 @@ export class EntityController {
     return this.service.editEntityById(entityId,entityDto);
   }
 
+
+
+
+
   @Delete(':resourceId')
   @ApiParam({name: 'resourceId', required: true, description: 'Entity id to delete'})
   @ApiOkResponse()
@@ -108,13 +120,38 @@ export class EntityController {
     return this.service.deleteEntityById(entityId);
   }
 
-  // @MessagePattern({ cmd: 'get_all_entities' })
-  // getAllEntities(): Promise<GenericEntity[]> {
-  //   //const value = this.cacheManager.get('entities');
-  //   return new Promise((resolve, reject) => {
-  //     resolve([{id:  1 , name: 'Jose Microservicio' , score: 99}]);
-  //  });//this.entityService.getAllEntities();
-  // }
+
+
+
+
+
+  @Get('local')
+  @ApiOkResponse({
+    description: 'La lista fue consultada con exito.',
+    type: EntityDto,
+    isArray: true
+  })
+  @ApiOperation({
+    summary: 'Devuelve una lista de entidades',
+    description: 'Devuelve una lista de todos las entidades. Si no hay entidades devuelve una lista vacia',
+  })
+  @CacheKey('custom_key')
+  @CacheTTL(20)
+  getAllEntitiesLocal(): Promise<EntityDto[]> {
+    //const value = this.cacheManager.get('entities');
+    return this.service.getAllEntitiesLocal();
+  }
+
+
+  @MessagePattern({ cmd: 'get_all_entities_local' })
+  getAllEntitiesLocalMicroService(): Promise<EntityDto[]> {
+    //const value = this.cacheManager.get('entities');
+    return this.service.getAllEntities();
+  }
+
+
+
+
 
   @UsePipes(new ValidationPipe({ transform: false }))
   @UsePipes(new FilterPipe())
@@ -137,6 +174,10 @@ export class EntityController {
     ) {
       return filterOutputDto;
   }
+
+
+
+
 
   @ApiHeader({
       name:"token",
@@ -163,6 +204,9 @@ export class EntityController {
       return user;
   }
 
+
+
+
   @Post('interceptor')
   @ApiOkResponse({
     description: 'Devuelve ok.',
@@ -171,6 +215,8 @@ export class EntityController {
   async interceptor() {
       return 'ok';
   }
+
+
 
   @ApiCookieAuth()
   @Post('cookieAuth')
@@ -182,6 +228,8 @@ export class EntityController {
       return 'ok';
   }
 
+
+
   @Post('session')
   @ApiOkResponse({
     description: 'Devuelve ok.',
@@ -191,6 +239,8 @@ export class EntityController {
     return session.visits;
   }
 
+
+
   @ApiCookieAuth()
   @Post('cookie')
   @ApiOkResponse({
@@ -199,6 +249,8 @@ export class EntityController {
   async cookie(@Cookies('x-token') XTokenCookie: string) {
     return XTokenCookie;
   }
+
+
 
   @UseFilters(new HttpExceptionFilter())
   @Post('exceptionFilter')
@@ -210,6 +262,7 @@ export class EntityController {
   }
   
 
+
   @Post('log')
   @ApiOkResponse({
     description: 'Usa el logger.',
@@ -217,4 +270,6 @@ export class EntityController {
   async log() {
     this.logger.log('Doing something...',EntityController.name);
   }
+
+
 }

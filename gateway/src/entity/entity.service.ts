@@ -1,25 +1,25 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { EntityDto } from './dtos/entity.dto';
 import { GenericEntity } from './entities/generic-entity.entity';
-import { ENTITY_MICROSERVICE_NAME } from './entity.constans';
-import { GenericEntityRepository } from './entity.repository';
+import { ENTITY_MICROSERVICE_LOCAL_NAME, ENTITY_MICROSERVICE_NAME } from './entity.constans';
 
 @Injectable()
 export class EntityService {
   
   constructor(
     @Inject(ENTITY_MICROSERVICE_NAME) private client: ClientProxy,
-    // @InjectRepository(GenericEntityRepository)
-    // private genericEntityRepository: GenericEntityRepository,
+    @Inject(ENTITY_MICROSERVICE_LOCAL_NAME) private localClient: ClientProxy,
     ) {}
   
+  async getAllEntitiesLocal(): Promise<GenericEntity[]> {
+    const pattern = { cmd: 'get_all_entities_local' };
+    return this.localClient.send<GenericEntity[]>(pattern,{}).toPromise();
+  }
+
   async getAllEntities(): Promise<GenericEntity[]> {
     const pattern = { cmd: 'get_all_entities' };
     return this.client.send<GenericEntity[]>(pattern,{}).toPromise();
-    // return this.genericEntityRepository.find()
   }
   
   async getEntityById(entityIdToSearch : number): Promise<EntityDto> {
@@ -29,7 +29,6 @@ export class EntityService {
   
   createNewEntity = ( entityDto : EntityDto) => {
     const pattern = { cmd: 'create_entity' };
-    console.log(entityDto)
     return this.client.send<GenericEntity[]>(pattern,entityDto).toPromise();
   }
   

@@ -1,16 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { EntityDto } from './dtos/entity.dto';
 import { GenericEntity } from './entities/generic-entity.entity';
 import { EntityService } from './entity.service';
 
-@ApiTags('app')
 @Controller('api')
 export class EntityController {
-  getHello(): string {
-    return 'Hello World!'
-  }
+  
   constructor(private readonly entityService: EntityService) {}
 
   @MessagePattern({ cmd: 'get_all_entities' })
