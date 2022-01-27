@@ -98,7 +98,12 @@
       "/src/main.ts",
       "/src/(.*).module.ts",
       "/src/(.*)/(.*).(module|constans|repository).ts",
-      "/src/(.*)/(dtos|entities)"
+      "/src/(.*)/(dtos|entities)",
+      "/src/decorators/(.*)",
+      "/src/filters/http-exception.filter.ts",
+      "/src/interceptors/logging.interceptor.ts",
+      "/src/middlewares/roles.middleware.ts",
+      "/src/entity/entity.controller.ts"
     ],
     "testResultsProcessor": "jest-sonar-reporter",
     "coverageReporters": [

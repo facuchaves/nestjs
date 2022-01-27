@@ -29,9 +29,9 @@ describe('Entity controller', () => {
 
   describe('Happy paths', () => {
 
-    it(`/GET resources: should retunr all resources`, async () => {
+    it.skip(`/GET resources: should return all resources`, async () => {
       return request(app.getHttpServer())
-        .get('/api/resource')
+        .get('/api/resource/local')
         .expect(200)
         // .expect(await entityService.getAllEntities(),
         // );

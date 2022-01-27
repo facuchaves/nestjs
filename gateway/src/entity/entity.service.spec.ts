@@ -9,7 +9,8 @@ import { EntityService } from './entity.service';
 describe('Entity service', () => {
 
   let clientProxy: ClientProxy = { send : (pattern: any, data: any) => (new Observable() ) } as ClientProxy;
-  let entityService: EntityService = new EntityService(clientProxy);
+  let clientProxyLocal: ClientProxy = { send : (pattern: any, data: any) => (new Observable() ) } as ClientProxy;
+  let entityService: EntityService = new EntityService(clientProxy,clientProxyLocal);
 
   afterEach( () => {
     jest.clearAllMocks();
@@ -18,19 +19,24 @@ describe('Entity service', () => {
   describe('Happy paths', () => {
 
     it('should return all entities', async () => {
-      const result : Array<GenericEntity> = [
-        {
-          id: 1,
-          name: 'Nombre',
-          score: 78
-       }
-      ];
-      jest.spyOn(entityService, 'getAllEntities').mockImplementation(async () => result );
-
-      expect(await entityService.getAllEntities()).toStrictEqual( result );
-
+      const clientProxySpies = jest.spyOn(clientProxy, 'send');
+      
+      entityService.getAllEntities()
+      
+      expect(clientProxySpies).toBeCalledTimes(1);
+      expect(clientProxySpies).toBeCalledWith({ cmd: 'get_all_entities' },{});
       });
     
+
+    it('should return all entities local', async () => {
+      const clientProxySpies = jest.spyOn(clientProxyLocal, 'send');
+      
+      entityService.getAllEntitiesLocal()
+      
+      expect(clientProxySpies).toBeCalledTimes(1);
+      expect(clientProxySpies).toBeCalledWith({ cmd: 'get_all_entities_local' },{});
+    });
+
     it('should return specific entities', async () => {
       const idToFind = 1;
 
