@@ -18,16 +18,16 @@ export class EntityService {
     return allEntities.find( entity => entity.entity_id == entityIdToSearch)
   }
   
-  createNewEntity = ( newEntity : GenericEntity) => {
-    this.genericEntityRepository.save([newEntity])
+  createNewEntity = async ( newEntity : GenericEntity) => {
+    return await this.genericEntityRepository.insert(newEntity)
   }
   
-  editEntityById(entityId: number, entityDto: GenericEntity) {
-    this.genericEntityRepository.update(entityId,entityDto)
+  editEntityById = async (entityId: number, entityDto: GenericEntity) => {
+    return await this.genericEntityRepository.update(entityId,entityDto)
   }
 
-  deleteEntityById = ( entityId : number) => {
-    this.genericEntityRepository.delete(entityId)
+  deleteEntityById = async ( entityId : number) => {
+    return await this.genericEntityRepository.delete(entityId)
   }
 
 }

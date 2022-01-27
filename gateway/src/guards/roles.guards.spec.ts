@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Reflector } from '@nestjs/core';
 import { ExecutionContext } from '@nestjs/common';
 
-describe('User middleware', () => {
+describe('Roles Guard', () => {
 
   describe('Happy paths', () => {
     

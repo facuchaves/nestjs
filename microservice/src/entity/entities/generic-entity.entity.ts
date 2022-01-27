@@ -1,3 +1,4 @@
+import { Max, Min } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({name: 'genericentity'})
@@ -9,7 +10,9 @@ export class GenericEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({width:3})
+  @Min(1)
+  @Max(100)
   score: number;
 
 }
