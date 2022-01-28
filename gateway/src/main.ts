@@ -32,7 +32,7 @@ async function bootstrap() {
   await app.startAllMicroservicesAsync();
 
   const config = new DocumentBuilder()
-  .setTitle('CRUDX Example e')
+  .setTitle('CRUDX Example')
   .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
   .addTag('Recourses')
