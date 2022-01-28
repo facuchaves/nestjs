@@ -36,8 +36,8 @@ async function bootstrap() {
   .setDescription('This is a litlle but very complete CRUDX for an generic entity.')
   .setVersion('1.0')
   .addTag('Recourses')
-  .addServer('https://')
-  .addServer('http://localhost:8080/')
+  // .addServer('https://')
+  // .addServer('http://localhost:8080/')
   .addCookieAuth('x-token',{ name: 'x-token', description:'here is a description, maybe can give a default value' } as SecuritySchemeObject)
   .build();
 
