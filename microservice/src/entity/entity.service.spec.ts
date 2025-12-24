@@ -121,7 +121,7 @@ describe('Entity Service', () => {
       await repository.insert(entity);
   
       const res = await service.editEntityById(entity.entity_id,{name:'Pepe test editado'} as GenericEntity)
-      console.log(res)
+      
       const allEntites = await repository.query('SELECT * FROM genericentity;')
 
       expect(allEntites).toHaveLength(1);

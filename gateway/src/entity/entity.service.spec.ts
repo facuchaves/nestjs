@@ -23,7 +23,7 @@ describe('Entity service', () => {
       
       entityService.getAllEntities()
       
-      expect(clientProxySpies).toBeCalledTimes(1);
+      expect(clientProxySpies).toBeCalledTimes(2);
       expect(clientProxySpies).toBeCalledWith({ cmd: 'get_all_entities' },{});
       });
     

@@ -2,7 +2,15 @@ import { ApiProperty } from "@nestjs/swagger"
 import { IsInt, IsString, Max, Min } from "class-validator"
 
 export class EntityDto {
-    
+
+    @ApiProperty({
+        description: 'Id for an generic entity',
+        type: Number,
+        required: false
+    })
+    @IsInt()
+    id?: number
+
     @ApiProperty({
         description: "The name of the entity",
         type: String,

@@ -35,11 +35,32 @@ export class EntityController {
   })
   @CacheKey('custom_key')
   @CacheTTL(20)
-  getAllEntities(): Promise<EntityDto[]> {
+  async getAllEntities(): Promise<EntityDto[]> {
     //const value = this.cacheManager.get('entities');
-    return this.service.getAllEntities();
+    return [{ id: 1 , name : "Nombre" , score : 30 } ];//this.service.getAllEntitiesLocal();
   }
 
+
+
+
+
+
+  @Get('local')
+  @ApiOkResponse({
+    description: 'La lista fue consultada con exito.',
+    type: EntityDto,
+    isArray: true
+  })
+  @ApiOperation({
+    summary: 'Devuelve una lista de entidades',
+    description: 'Devuelve una lista de todos las entidades. Si no hay entidades devuelve una lista vacia',
+  })
+  @CacheKey('custom_key')
+  @CacheTTL(20)
+  async getAllEntitiesLocal(): Promise<EntityDto[]> {
+    //const value = this.cacheManager.get('entities');
+    return [{ id: 1 , name : "Nombre" , score : 30 } ];//this.service.getAllEntitiesLocal();
+  }
 
 
 
@@ -57,7 +78,8 @@ export class EntityController {
     description: 'Devuelve la entidad',
   })
   async getEntityById( @Param('resourceId' , ParseIntPipe ) entityId: number ): Promise<EntityDto> {
-    return this.service.getEntityById(entityId);
+    return { id: 1 , name : "Nombre" , score : 30 }
+    // return this.service.getEntityById(entityId);
   }
 
 
@@ -122,32 +144,11 @@ export class EntityController {
 
 
 
-
-
-
-  @Get('local')
-  @ApiOkResponse({
-    description: 'La lista fue consultada con exito.',
-    type: EntityDto,
-    isArray: true
-  })
-  @ApiOperation({
-    summary: 'Devuelve una lista de entidades',
-    description: 'Devuelve una lista de todos las entidades. Si no hay entidades devuelve una lista vacia',
-  })
-  @CacheKey('custom_key')
-  @CacheTTL(20)
-  getAllEntitiesLocal(): Promise<EntityDto[]> {
-    //const value = this.cacheManager.get('entities');
-    return this.service.getAllEntitiesLocal();
-  }
-
-
-  @MessagePattern({ cmd: 'get_all_entities_local' })
-  getAllEntitiesLocalMicroService(): Promise<EntityDto[]> {
-    //const value = this.cacheManager.get('entities');
-    return this.service.getAllEntities();
-  }
+  // @MessagePattern({ cmd: 'get_all_entities_local' })
+  // getAllEntitiesLocalMicroService(): Promise<EntityDto[]> {
+  //   //const value = this.cacheManager.get('entities');
+  //   return this.service.getAllEntities();
+  // }
 
 
 

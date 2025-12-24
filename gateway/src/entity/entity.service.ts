@@ -13,7 +13,7 @@ export class EntityService {
     ) {}
   
   async getAllEntitiesLocal(): Promise<GenericEntity[]> {
-    const pattern = { cmd: 'get_all_entities_local' };
+    const pattern = { cmd: 'get_all_entities' };
     return this.localClient.send<GenericEntity[]>(pattern,{}).toPromise();
   }
 
