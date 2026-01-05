@@ -46,8 +46,6 @@ describe('Entity Service', () => {
     };
   });
 
-  beforeEach(async () => {});
-
   afterAll(async () => {
     await getConnection(testConnectionName).close();
   });
@@ -113,19 +111,25 @@ describe('Entity Service', () => {
 
   describe('Update', () => {
     it('should update existing entity', async () => {
-      const entity: GenericEntity = {
-        id: 98,
+      const entity: CreateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
       };
 
-      await repository.insert(entity);
+      const createGenericEntityResponseDto: CreateGenericEntityResponseDto = await service.createNewEntity(
+        entity,
+      );
 
-      const res = await service.editEntityById(entity.id, {
-        name: 'Pepe test editado',
-      } as GenericEntity);
+      const res = await service.editEntityById(
+        createGenericEntityResponseDto.id,
+        {
+          name: 'Pepe test editado',
+        } as GenericEntity,
+      );
 
-      const updatedEntity = await service.getEntityById(entity.id);
+      const updatedEntity = await service.getEntityById(
+        createGenericEntityResponseDto.id,
+      );
 
       expect(updatedEntity.name).toEqual('Pepe test editado');
     });
