@@ -13,11 +13,7 @@ export class EntityService {
   constructor(private genericEntityRepository: GenericEntityRepository) {}
 
   async getAllEntities(): Promise<EntityDto[]> {
-    return (await this.genericEntityRepository.find()).map((entity) => ({
-      id: entity.id,
-      name: entity.name,
-      score: entity.score,
-    }));
+    return await this.genericEntityRepository.find();
   }
 
   async getEntityById(entityIdToSearch: number): Promise<EntityDto> {
