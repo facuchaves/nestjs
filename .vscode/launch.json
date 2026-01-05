@@ -31,6 +31,7 @@
             "name": "Debug Jest (microservice)",
             "type": "node",
             "request": "launch",
+            "runtimeExecutable": "/home/facu/.nvm/versions/node/v16.20.2/bin/node",
             "program": "${workspaceFolder}/microservice/node_modules/jest/bin/jest",
             "cwd": "${workspaceFolder}/microservice",
             "args": [
