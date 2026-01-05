@@ -1,4 +1,3 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { EntityService } from '../../src/entity/entity.service';
 import {
   Repository,
@@ -7,7 +6,6 @@ import {
   getRepository,
   QueryFailedError,
 } from 'typeorm';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { GenericEntity } from '../../src/entity/entities/generic-entity.entity';
 import { EntityDto } from '../../src/entity/dtos/entity.dto';
 import { CreateGenericEntityDto } from '../../src/entity/dtos/create-generic-entity.dto';
@@ -74,7 +72,7 @@ describe('Entity Service', () => {
   });
 
   describe('Create', () => {
-    it.only('should create new entity', async () => {
+    it('should create new entity', async () => {
       const entity: CreateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
