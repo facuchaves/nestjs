@@ -33,11 +33,20 @@ export class EntityService {
   }
 
   async editEntityById(
-    entityId: number,
+    id: number,
     entityDto: UpdateGenericEntityDto,
   ): Promise<UpdateGenericEntityResponseDto> {
-    const res = await this.genericEntityRepository.update(entityId, entityDto);
-    return { updated: res?.affected > 0 };
+    const entity = await this.genericEntityRepository.preload({
+      id,
+      ...entityDto,
+    });
+
+    if (!entity) {
+      return { updated: false };
+    }
+
+    await this.genericEntityRepository.save(entity);
+    return { updated: true };
   }
 
   async deleteEntityById(
@@ -46,7 +55,7 @@ export class EntityService {
     await this.genericEntityRepository.delete(entityId);
 
     const exists = await this.genericEntityRepository.findOne({
-      where: { entity_id: entityId },
+      where: { id: entityId },
     });
 
     return { deleted: !exists };
