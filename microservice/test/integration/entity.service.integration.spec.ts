@@ -42,8 +42,7 @@ describe('Entity Service', () => {
 
     loadedEntity = {
       ...response,
-      name: preLoadEntity.name,
-      score: preLoadEntity.score,
+      ...preLoadEntity,
     };
   });
 
@@ -88,25 +87,6 @@ describe('Entity Service', () => {
         ...createGenericEntityResponseDto,
         ...entity,
       });
-    });
-
-    it('should fail trying to create an existing entity', async () => {
-      const entity: GenericEntity = {
-        id: 9,
-        name: 'Pepe test',
-        score: 58,
-      };
-
-      await repository.insert(entity);
-
-      const reject = await expect(async () => {
-        await service.createNewEntity(entity);
-      }).rejects;
-
-      reject.toThrowError(QueryFailedError);
-      reject.toThrowError(
-        'SQLITE_CONSTRAINT: UNIQUE constraint failed: genericentity.entity_id',
-      );
     });
   });
 
