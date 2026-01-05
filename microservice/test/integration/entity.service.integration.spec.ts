@@ -11,6 +11,7 @@ import { EntityDto } from '../../src/entity/dtos/entity.dto';
 import { CreateGenericEntityDto } from '../../src/entity/dtos/create-generic-entity.dto';
 import { CreateGenericEntityResponseDto } from '../../src/entity/dtos/create-generic-entity.response.dto';
 import { DeleteGenericEntityResponseDto } from '../../src/entity/dtos/delete-generic-entity.response.dto';
+import { UpdateGenericEntityDto } from 'src/entity/dtos/update-generic-entity.dto';
 
 describe('Entity Service', () => {
   let service: EntityService;
@@ -124,7 +125,7 @@ describe('Entity Service', () => {
         createGenericEntityResponseDto.id,
         {
           name: 'Pepe test editado',
-        } as GenericEntity,
+        } as UpdateGenericEntityDto,
       );
 
       const updatedEntity = await service.getEntityById(
@@ -135,26 +136,16 @@ describe('Entity Service', () => {
     });
 
     it('should fail updating non-existing entity', async () => {
-      const entity: GenericEntity = {
-        id: 99,
+      const entity: UpdateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
       };
 
-      await repository.insert(entity);
-
-      const nonExitingEntityId: number = 100;
+      const nonExitingEntityId: number = -1;
 
       const res = await service.editEntityById(nonExitingEntityId, entity);
 
-      const reject = await expect(async () => {
-        await service.createNewEntity(entity);
-      }).rejects;
-
-      reject.toThrowError(QueryFailedError);
-      reject.toThrowError(
-        'SQLITE_CONSTRAINT: UNIQUE constraint failed: genericentity.entity_id',
-      );
+      expect(res).toEqual({ updated: false });
     });
   });
 
