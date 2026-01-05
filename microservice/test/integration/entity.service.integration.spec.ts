@@ -41,8 +41,8 @@ describe('Entity Service', () => {
     );
 
     loadedEntity = {
-      ...response,
       ...preLoadEntity,
+      ...response,
     };
   });
 
@@ -131,17 +131,20 @@ describe('Entity Service', () => {
 
   describe('Delete', () => {
     it('should delete from database entity', async () => {
-      const entity: GenericEntity = {
-        id: 100,
+      const entity: CreateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
       };
 
-      await repository.insert(entity);
+      const createGenericEntityResponseDto: CreateGenericEntityResponseDto = await service.createNewEntity(
+        entity,
+      );
 
-      await service.deleteEntityById(entity.id);
+      await service.deleteEntityById(createGenericEntityResponseDto.id);
 
-      const res: EntityDto = await service.getEntityById(entity.id);
+      const res: EntityDto = await service.getEntityById(
+        createGenericEntityResponseDto.id,
+      );
 
       expect(res).toBeUndefined();
     });
