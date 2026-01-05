@@ -15,10 +15,41 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  describe('/api/resource', () => {
+    describe('GET', () => {
+      it('it should return 200 code', async () => {
+        await request(app.getHttpServer()).get('/api/resource').expect(200);
+      });
+
+      it('it should return correct body)', async () => {
+        const response = await request(app.getHttpServer()).get(
+          '/api/resource',
+        );
+        await expect(response.body).toEqual([
+          {
+            id: 1,
+            name: 'Nombre',
+            score: 30,
+          },
+        ]);
+      });
+    });
+
+    describe('POST', () => {
+      it('it should return 201 code', async () => {
+        await request(app.getHttpServer())
+          .post('/api/resource')
+          .send({
+            id: 0,
+            name: 'Rebeca',
+            score: 67,
+          })
+          .expect(201);
+      });
+
+      it('it should return 400 on bad params)', async () => {
+        request(app.getHttpServer()).post('/api/resource').send({}).expect(400);
+      });
+    });
   });
 });

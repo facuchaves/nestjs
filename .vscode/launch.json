@@ -26,6 +26,23 @@
               "NODE_ENV": "development"
             },
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Debug Jest (microservice)",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/microservice/node_modules/jest/bin/jest",
+            "cwd": "${workspaceFolder}/microservice",
+            "args": [
+                "--runInBand",
+                "--watch=true"
+            ],
+            "console": "integratedTerminal",
+            "sourceMaps": true,
+            "skipFiles": ["<node_internals>/**"],
+            "env": {
+                "NODE_ENV": "test"
+            }
         }
     ]
 }
