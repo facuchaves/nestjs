@@ -43,7 +43,12 @@ export class EntityService {
   async deleteEntityById(
     entityId: number,
   ): Promise<DeleteGenericEntityResponseDto> {
-    const res = await this.genericEntityRepository.delete(entityId);
-    return { deleted: res?.affected > 0 };
+    await this.genericEntityRepository.delete(entityId);
+
+    const exists = await this.genericEntityRepository.findOne({
+      where: { entity_id: entityId },
+    });
+
+    return { deleted: !exists };
   }
 }
