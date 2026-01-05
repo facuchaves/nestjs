@@ -4,7 +4,6 @@ import {
   createConnection,
   getConnection,
   getRepository,
-  QueryFailedError,
 } from 'typeorm';
 import { GenericEntity } from '../../src/entity/entities/generic-entity.entity';
 import { EntityDto } from '../../src/entity/dtos/entity.dto';
