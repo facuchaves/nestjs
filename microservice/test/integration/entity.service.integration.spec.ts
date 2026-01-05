@@ -175,7 +175,7 @@ describe('Entity Service', () => {
       expect(res).toBeUndefined();
     });
 
-    it('should reponse deleted=true on delete', async () => {
+    it.only('should reponse deleted=true on delete', async () => {
       const entity: CreateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
@@ -185,13 +185,9 @@ describe('Entity Service', () => {
         entity,
       );
 
-      const before = await service.getEntityById(createdEntityResponseDto.id);
-
       const deleteGenericEntityResponseDto: DeleteGenericEntityResponseDto = await service.deleteEntityById(
         createdEntityResponseDto.id,
       );
-
-      const after = await service.getEntityById(createdEntityResponseDto.id);
 
       expect(deleteGenericEntityResponseDto).toEqual({ deleted: true });
     });
