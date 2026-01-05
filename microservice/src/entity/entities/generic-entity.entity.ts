@@ -2,8 +2,8 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'genericentity' })
 export class GenericEntity {
-  @PrimaryGeneratedColumn()
-  entity_id: number;
+  @PrimaryGeneratedColumn({ name: 'entity_id' })
+  id: number;
 
   @Column()
   name: string;

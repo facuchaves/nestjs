@@ -14,7 +14,7 @@ export class EntityService {
 
   async getAllEntities(): Promise<EntityDto[]> {
     return (await this.genericEntityRepository.find()).map((entity) => ({
-      id: entity.entity_id,
+      id: entity.id,
       name: entity.name,
       score: entity.score,
     }));
@@ -29,7 +29,7 @@ export class EntityService {
     newEntity: CreateGenericEntityDto,
   ): Promise<CreateGenericEntityResponseDto> {
     const res = await this.genericEntityRepository.insert(newEntity);
-    return { id: res.identifiers[0].entity_id };
+    return { id: res.identifiers[0].id };
   }
 
   async editEntityById(

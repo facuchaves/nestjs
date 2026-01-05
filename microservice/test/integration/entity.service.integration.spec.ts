@@ -74,9 +74,8 @@ describe('Entity Service', () => {
   });
 
   describe('Create', () => {
-    it('should create new entity', async () => {
-      const entity: GenericEntity = {
-        entity_id: 97,
+    it.only('should create new entity', async () => {
+      const entity: CreateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
       };
@@ -89,15 +88,14 @@ describe('Entity Service', () => {
       );
 
       expect(createdEntity).toEqual({
-        ...createdEntity,
-        name: entity.name,
-        score: entity.score,
+        ...createGenericEntityResponseDto,
+        ...entity,
       });
     });
 
     it('should fail trying to create an existing entity', async () => {
       const entity: GenericEntity = {
-        entity_id: 9,
+        id: 9,
         name: 'Pepe test',
         score: 58,
       };
@@ -118,25 +116,25 @@ describe('Entity Service', () => {
   describe('Update', () => {
     it('should update existing entity', async () => {
       const entity: GenericEntity = {
-        entity_id: 98,
+        id: 98,
         name: 'Pepe test',
         score: 58,
       };
 
       await repository.insert(entity);
 
-      const res = await service.editEntityById(entity.entity_id, {
+      const res = await service.editEntityById(entity.id, {
         name: 'Pepe test editado',
       } as GenericEntity);
 
-      const updatedEntity = await service.getEntityById(entity.entity_id);
+      const updatedEntity = await service.getEntityById(entity.id);
 
       expect(updatedEntity.name).toEqual('Pepe test editado');
     });
 
     it('should fail updating non-existing entity', async () => {
       const entity: GenericEntity = {
-        entity_id: 99,
+        id: 99,
         name: 'Pepe test',
         score: 58,
       };
@@ -161,21 +159,21 @@ describe('Entity Service', () => {
   describe('Delete', () => {
     it('should delete from database entity', async () => {
       const entity: GenericEntity = {
-        entity_id: 100,
+        id: 100,
         name: 'Pepe test',
         score: 58,
       };
 
       await repository.insert(entity);
 
-      await service.deleteEntityById(entity.entity_id);
+      await service.deleteEntityById(entity.id);
 
-      const res: EntityDto = await service.getEntityById(entity.entity_id);
+      const res: EntityDto = await service.getEntityById(entity.id);
 
       expect(res).toBeUndefined();
     });
 
-    it.only('should reponse deleted=true on delete', async () => {
+    it('should reponse deleted=true on delete', async () => {
       const entity: CreateGenericEntityDto = {
         name: 'Pepe test',
         score: 58,
