@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EntityController } from './entity.controller';
-import { EntityService } from './entity.service';
-import { GenericEntity } from './entities/generic-entity.entity';
-import { EntityDto } from './dtos/entity.dto';
+import { EntityController } from '../../src/entity/entity.controller';
+import { EntityService } from '../../src/entity/entity.service';
+import { GenericEntity } from '../../src/entity/entities/generic-entity.entity';
+import { EntityDto } from '../../src/entity/dtos/entity.dto';
 
 describe.skip('EntityController', () => {
   let controller: EntityController;
