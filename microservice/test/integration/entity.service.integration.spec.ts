@@ -13,7 +13,7 @@ import { CreateGenericEntityResponseDto } from '../../src/entity/dtos/create-gen
 import { DeleteGenericEntityResponseDto } from '../../src/entity/dtos/delete-generic-entity.response.dto';
 import { UpdateGenericEntityDto } from 'src/entity/dtos/update-generic-entity.dto';
 
-describe('Entity Service', () => {
+describe('Entity Service(Integration)', () => {
   let service: EntityService;
   let repository: Repository<GenericEntity>;
   let loadedEntity: EntityDto;
