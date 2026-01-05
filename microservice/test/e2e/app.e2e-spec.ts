@@ -6,7 +6,7 @@ import {
   ClientProxyFactory,
 } from '@nestjs/microservices';
 import { INestMicroservice } from '@nestjs/common';
-import { AppModule } from '../src/app.module';
+import { AppModule } from '../../src/app.module';
 
 describe('Entity Microservice (E2E)', () => {
   let app: INestMicroservice;

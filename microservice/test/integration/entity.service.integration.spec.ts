@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EntityService } from './entity.service';
+import { EntityService } from '../../src/entity/entity.service';
 import {
   Repository,
   createConnection,
@@ -8,11 +8,11 @@ import {
   QueryFailedError,
 } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { GenericEntity } from './entities/generic-entity.entity';
-import { EntityDto } from './dtos/entity.dto';
-import { CreateGenericEntityDto } from './dtos/create-generic-entity.dto';
-import { CreateGenericEntityResponseDto } from './dtos/create-generic-entity.response.dto';
-import { DeleteGenericEntityResponseDto } from './dtos/delete-generic-entity.response.dto';
+import { GenericEntity } from '../../src/entity/entities/generic-entity.entity';
+import { EntityDto } from '../../src/entity/dtos/entity.dto';
+import { CreateGenericEntityDto } from '../../src/entity/dtos/create-generic-entity.dto';
+import { CreateGenericEntityResponseDto } from '../../src/entity/dtos/create-generic-entity.response.dto';
+import { DeleteGenericEntityResponseDto } from '../../src/entity/dtos/delete-generic-entity.response.dto';
 
 describe('Entity Service', () => {
   let service: EntityService;
