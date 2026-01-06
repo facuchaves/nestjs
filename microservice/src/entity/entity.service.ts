@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { GenericEntity } from './entities/generic-entity.entity';
 import { GenericEntityRepository } from './entity.repository';
 import { EntityDto } from './dtos/entity.dto';
 import { CreateGenericEntityDto } from './dtos/create-generic-entity.dto';

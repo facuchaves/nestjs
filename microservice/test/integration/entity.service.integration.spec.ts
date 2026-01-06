@@ -100,12 +100,9 @@ describe('Entity Service(Integration)', () => {
         entity,
       );
 
-      const res = await service.editEntityById(
-        createGenericEntityResponseDto.id,
-        {
-          name: 'Pepe test editado',
-        } as UpdateGenericEntityDto,
-      );
+      await service.editEntityById(createGenericEntityResponseDto.id, {
+        name: 'Pepe test editado',
+      } as UpdateGenericEntityDto);
 
       const updatedEntity = await service.getEntityById(
         createGenericEntityResponseDto.id,
@@ -120,7 +117,7 @@ describe('Entity Service(Integration)', () => {
         score: 58,
       };
 
-      const nonExitingEntityId: number = -1;
+      const nonExitingEntityId = -1;
 
       const res = await service.editEntityById(nonExitingEntityId, entity);
 
