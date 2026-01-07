@@ -13,16 +13,31 @@ jobs:
         working-directory: microservice
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 👈 obligatorio para PRs en Sonar
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 16
-          cache: "yarn"
+          cache: yarn
           cache-dependency-path: microservice/yarn.lock
 
-      # SOLO si usás Yarn v3+
-      - run: corepack enable
+      # Solo si usás Yarn v3+
+      - name: Enable Corepack
+        run: corepack enable
 
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run tests with coverage
+        run: yarn test --coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: microservice
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
