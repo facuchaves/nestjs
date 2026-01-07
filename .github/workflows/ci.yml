@@ -18,8 +18,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 16
-          cache: "npm"
-          cache-dependency-path: microservice/package-lock.json
+          cache: "yarn"
+          cache-dependency-path: microservice/yarn.lock
 
-      - run: npm ci
-      - run: npm run test
+      # SOLO si usás Yarn v3+
+      - run: corepack enable
+
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
