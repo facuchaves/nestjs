@@ -60,7 +60,9 @@
     "ts-loader": "^8.0.17",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.1.5"
+    "typescript": "^4.1.5",
+    "sonarqube-scanner": "2.8.1",
+    "jest-sonar-reporter": "2.0.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -77,6 +79,28 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+        "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/src/main.ts",
+      "/src/(.*).module.ts",
+      "/src/(.*)/(.*).(module|constans|repository).ts",
+      "/src/(.*)/(dtos|entities)",
+      "/src/decorators/(.*)",
+      "/src/filters/http-exception.filter.ts",
+      "/src/interceptors/logging.interceptor.ts",
+      "/src/middlewares/roles.middleware.ts",
+      "/src/entity/entity.controller.ts"
+    ],
+    "testResultsProcessor": "jest-sonar-reporter",
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
+  },
+    "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "test-reporter.xml",
+    "indent": 4
   }
 }
