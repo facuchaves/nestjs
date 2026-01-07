@@ -70,17 +70,19 @@
       "json",
       "ts"
     ],
-    "rootDir": "test",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.ts",
+      "!src/main.ts",
+      "!src/app.module.ts",
+      "!src/**/*.module.ts"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "coverage",
     "testEnvironment": "node",
-        "coveragePathIgnorePatterns": [
+    "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/src/main.ts",
       "/src/(.*).module.ts",
@@ -89,12 +91,12 @@
       "/src/decorators/(.*)",
       "/src/filters/http-exception.filter.ts",
       "/src/interceptors/logging.interceptor.ts",
-      "/src/middlewares/roles.middleware.ts",
-      "/src/entity/entity.controller.ts"
+      "/src/middlewares/roles.middleware.ts"
     ],
     "testResultsProcessor": "jest-sonar-reporter",
     "coverageReporters": [
       "text",
+      "lcov",
       "cobertura"
     ]
   },
