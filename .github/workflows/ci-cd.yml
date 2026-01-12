@@ -56,7 +56,9 @@ jobs:
             export APP_VERSION=${APP_VERSION}
             cd ${{ secrets.APP_PATH }}
             git pull origin master
-            yarn install --production
+            yarn install
             yarn build
             pm2 restart nest-api || pm2 start dist/main.js --name nest-api
           EOF
+
+#Fix for dont install devDependencies or build in another part
