@@ -42,17 +42,20 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
+      - name: Set version
+        run: echo "APP_VERSION=${GITHUB_SHA::7}" >> $GITHUB_ENV
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-      - name: Deploy
+      - name: Deploy to EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+            export APP_VERSION=${APP_VERSION}
             cd ${{ secrets.APP_PATH }}
-            git pull origin main
+            git pull origin master
             yarn install --production
             yarn build
             pm2 restart nest-api || pm2 start dist/main.js --name nest-api
