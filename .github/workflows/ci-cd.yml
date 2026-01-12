@@ -42,8 +42,10 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
-      - name: Set version
-        run: echo "APP_VERSION=${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - name: Set app version
+        shell: bash
+        run: |
+          echo "APP_VERSION=${GITHUB_SHA::7}" >> $GITHUB_ENV
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
