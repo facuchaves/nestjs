@@ -18,6 +18,7 @@ async function bootstrap() {
 
   app.listen(() => {
     console.log(`Server listening on port ${PORT}...`);
+    console.log(`Service version: ${process.env.APP_VERSION}`);
   });
 }
 bootstrap();
