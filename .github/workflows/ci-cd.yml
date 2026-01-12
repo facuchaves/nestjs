@@ -56,6 +56,7 @@ jobs:
             export APP_VERSION=${APP_VERSION}
             cd ${{ secrets.APP_PATH }}
             git pull origin master
+            cd microservice
             yarn install --production
             yarn build
             pm2 restart nest-api || pm2 start dist/main.js --name nest-api
