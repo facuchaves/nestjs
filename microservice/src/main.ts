@@ -19,7 +19,7 @@ async function bootstrap() {
     },
   );
 
-  await app.listen(() => {
+  app.listen(() => {
     logger.log(`Server listening on port ${PORT}...`);
     logger.log(`Service version: ${process.env.APP_VERSION || 'v1.0.0'}`);
   });
