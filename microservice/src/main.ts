@@ -1,8 +1,11 @@
+import 'newrelic';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
+  const logger = new Logger('Bootstrap');
   const PORT = parseInt(process.env.PORT) || 9090;
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -16,9 +19,9 @@ async function bootstrap() {
     },
   );
 
-  app.listen(() => {
-    console.log(`Server listening on port ${PORT}...`);
-    console.log(`Service version: ${process.env.APP_VERSION}`);
+  await app.listen(() => {
+    logger.log(`Server listening on port ${PORT}...`);
+    logger.log(`Service version: ${process.env.APP_VERSION || 'v1.0.0'}`);
   });
 }
 bootstrap();
