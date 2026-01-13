@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { EntityService } from './entity.service';
 import { EntityDto } from './dtos/entity.dto';
@@ -10,11 +10,12 @@ import { DeleteGenericEntityResponseDto } from './dtos/delete-generic-entity.res
 
 @Controller('api')
 export class EntityController {
+  private readonly logger = new Logger(EntityController.name);
   constructor(private readonly entityService: EntityService) {}
 
   @MessagePattern({ cmd: 'get_all_entities' })
   getAllEntities(): Promise<EntityDto[]> {
-    //const value = this.cacheManager.get('entities');
+    this.logger.log('Iniciando petición TCP: get_all_entities');
     return this.entityService.getAllEntities();
   }
 
