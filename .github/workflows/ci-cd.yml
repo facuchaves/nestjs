@@ -61,8 +61,8 @@ jobs:
             yarn install
             yarn build
             # Restart PM2 and inject the version
-            APP_VERSION=$APP_VERSION pm2 restart nest-api --update-env || \
-            APP_VERSION=$APP_VERSION pm2 start dist/main.js --name nest-api
+            APP_VERSION=$APP_VERSION pm2 restart nest-api --update-env --node-args="-r newrelic" || \
+            APP_VERSION=$APP_VERSION pm2 start dist/main.js --name nest-api --node-args="-r newrelic"
           EOF
 
 #Fix for dont install devDependencies or build in another part
