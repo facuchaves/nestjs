@@ -34,14 +34,14 @@ describe('Filter pipe', () => {
   });
 
   describe('Error paths', () => {
-    it(`min age greater than max age`, async () => {
+    it(`shouk=ld throw bad request exception on min age greater than max age`, async () => {
       const adultFilter = {
         minAge: 22,
         maxAge: 21,
       };
 
       expect(() => filterPipe.transform(adultFilter)).toThrow(
-        'Max age must be greater than min age.',
+        BadRequestException,
       );
     });
   });
