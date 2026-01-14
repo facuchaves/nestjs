@@ -1,11 +1,10 @@
 import { RolesGuard } from '../../src/guards/roles.guard';
-import { Request, Response, NextFunction } from 'express';
 import { Reflector } from '@nestjs/core';
 import { ExecutionContext } from '@nestjs/common';
 
-describe('Roles Guard', () => {
+describe('Roles Guard (Unit)', () => {
   describe('Happy paths', () => {
-    it(`shoud acept user with admin rol`, async () => {
+    it(`should acept user with admin rol`, async () => {
       const reflector: Reflector = {
         get: (propertyName: String, any) => ['admin'],
       } as Reflector;
@@ -24,7 +23,7 @@ describe('Roles Guard', () => {
       expect(rolesGuard.canActivate(context)).toBeTruthy();
     });
 
-    it(`shoud deny user with another rol`, async () => {
+    it(`should deny user with another rol`, async () => {
       const reflector: Reflector = {
         get: (propertyName: String, any) => ['admin'],
       } as Reflector;
@@ -43,7 +42,7 @@ describe('Roles Guard', () => {
       expect(rolesGuard.canActivate(context)).toBeFalsy();
     });
 
-    it(`shoud deny user without rol`, async () => {
+    it(`should deny user without rol`, async () => {
       const reflector: Reflector = {
         get: (propertyName: String, any) => ['admin'],
       } as Reflector;
@@ -62,7 +61,7 @@ describe('Roles Guard', () => {
       expect(rolesGuard.canActivate(context)).toBeFalsy();
     });
 
-    it(`shoud accept user without rol`, async () => {
+    it(`should accept user without rol`, async () => {
       const reflector: Reflector = {
         get: (propertyName: String, any) => [],
       } as Reflector;

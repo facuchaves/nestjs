@@ -6,7 +6,7 @@ import { GenericEntity } from '../../src/entity/entities/generic-entity.entity';
 import { EntityController } from '../../src/entity/entity.controller';
 import { EntityService } from '../../src/entity/entity.service';
 
-describe('Entity service', () => {
+describe('Entity service (Unit)', () => {
   let clientProxy: ClientProxy = {
     send: (pattern: any, data: any) => new Observable(),
   } as ClientProxy;

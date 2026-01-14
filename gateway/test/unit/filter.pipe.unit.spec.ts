@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { FilterPipe } from '../../src/pipes/filter.pipe';
 
-describe('Filter pipe', () => {
+describe('Filter pipe (Unit)', () => {
   const filterPipe: FilterPipe = new FilterPipe();
   describe('Happy paths', () => {
-    it(`adult filter`, async () => {
+    it(`should fill with adult true`, async () => {
       const adultFilter = {
         minAge: 18,
         maxAge: 21,
@@ -18,7 +18,7 @@ describe('Filter pipe', () => {
       });
     });
 
-    it(`child filter`, async () => {
+    it(`should fill with adult false`, async () => {
       const childFilter = {
         minAge: 17,
         maxAge: 21,

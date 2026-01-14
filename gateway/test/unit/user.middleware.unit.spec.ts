@@ -2,10 +2,10 @@ import { UserMiddleware } from '../../src/middlewares/user.middleware';
 import { Request, Response, NextFunction } from 'express';
 import { Logger } from '@nestjs/common';
 
-describe('User middleware', () => {
+describe('User middleware (Unit)', () => {
   const userMiddleware: UserMiddleware = new UserMiddleware(new Logger());
   describe('Happy paths', () => {
-    it(`fill req`, async () => {
+    it(`should fill req`, async () => {
       const req = {
         headers: {
           token: '{ "name": "UserNameReq" }',
@@ -17,7 +17,7 @@ describe('User middleware', () => {
       expect(req['user']).toStrictEqual({ name: 'UserNameReq' });
     });
 
-    it(`fill res`, async () => {
+    it(`should fill res`, async () => {
       const res: Response = {} as Response;
 
       userMiddleware.use({ headers: {} } as Request, res, () => {});
@@ -25,7 +25,7 @@ describe('User middleware', () => {
       expect(res['user']).toStrictEqual({ name: 'UserNameRes' });
     });
 
-    it(`call nest()`, async () => {
+    it(`should call next()`, async () => {
       const mockedObject = {
         mockedMethod: () => {},
       };
