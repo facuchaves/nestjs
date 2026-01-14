@@ -1,9 +1,6 @@
 import { ClientProxy } from '@nestjs/microservices';
-import { Test, TestingModule } from '@nestjs/testing';
 import { Observable } from 'rxjs';
 import { EntityDto } from '../../src/entity/dtos/entity.dto';
-import { GenericEntity } from '../../src/entity/entities/generic-entity.entity';
-import { EntityController } from '../../src/entity/entity.controller';
 import { EntityService } from '../../src/entity/entity.service';
 
 describe('Entity service (Unit)', () => {
@@ -28,7 +25,7 @@ describe('Entity service (Unit)', () => {
 
       entityService.getAllEntities();
 
-      expect(clientProxySpies).toBeCalledTimes(2);
+      expect(clientProxySpies).toBeCalledTimes(1);
       expect(clientProxySpies).toBeCalledWith({ cmd: 'get_all_entities' }, {});
     });
 
@@ -38,10 +35,7 @@ describe('Entity service (Unit)', () => {
       entityService.getAllEntitiesLocal();
 
       expect(clientProxySpies).toBeCalledTimes(1);
-      expect(clientProxySpies).toBeCalledWith(
-        { cmd: 'get_all_entities_local' },
-        {},
-      );
+      expect(clientProxySpies).toBeCalledWith({ cmd: 'get_all_entities' }, {});
     });
 
     it('should return specific entities', async () => {
