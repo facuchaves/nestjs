@@ -44,6 +44,24 @@
             "env": {
                 "NODE_ENV": "test"
             }
+        },
+        {
+            "name": "Debug Jest (gateway)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "/home/facu/.nvm/versions/node/v16.20.2/bin/node",
+            "program": "${workspaceFolder}/gateway/node_modules/jest/bin/jest",
+            "cwd": "${workspaceFolder}/gateway",
+            "args": [
+                "--runInBand",
+                "--watch=true"
+            ],
+            "console": "integratedTerminal",
+            "sourceMaps": true,
+            "skipFiles": ["<node_internals>/**"],
+            "env": {
+                "NODE_ENV": "test"
+            }
         }
     ]
 }

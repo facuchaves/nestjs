@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { FilterPipe } from '../../src/pipes/filter.pipe';
 
-describe('Filter pipe', () => {
+describe('Filter pipe (Unit)', () => {
   const filterPipe: FilterPipe = new FilterPipe();
   describe('Happy paths', () => {
-    it(`adult filter`, async () => {
+    it(`should fill with adult true`, async () => {
       const adultFilter = {
         minAge: 18,
         maxAge: 21,
@@ -18,7 +18,7 @@ describe('Filter pipe', () => {
       });
     });
 
-    it(`child filter`, async () => {
+    it(`should fill with adult false`, async () => {
       const childFilter = {
         minAge: 17,
         maxAge: 21,
@@ -34,14 +34,14 @@ describe('Filter pipe', () => {
   });
 
   describe('Error paths', () => {
-    it(`min age greater than max age`, async () => {
+    it(`should throw bad request exception on min age greater than max age`, async () => {
       const adultFilter = {
         minAge: 22,
         maxAge: 21,
       };
 
       expect(() => filterPipe.transform(adultFilter)).toThrow(
-        'Max age must be greater than min age.',
+        BadRequestException,
       );
     });
   });
