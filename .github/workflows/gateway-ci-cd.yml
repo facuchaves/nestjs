@@ -1,0 +1,51 @@
+name: Gateway CI-CD
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "gateway/**"
+  pull_request:
+    branches: [master]
+    paths:
+      - "gateway/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gateway
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+          cache-dependency-path: gateway/yarn.lock
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run tests
+        run: yarn test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy Gateway
+        run: |
+          echo "Deploy gateway (completar según infra)"
+
+#Fix for dont install devDependencies or build in another part
