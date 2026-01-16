@@ -24,7 +24,7 @@ describe('AppController (e2e)', () => {
     })
       .overrideInterceptor(CacheInterceptor)
       .useValue({
-        intercept: (_ctx, next) => next.handle(), // 🔥 bypass total
+        intercept: (_ctx, next) => next.handle(),
       })
       .overrideProvider(ENTITY_MICROSERVICE_NAME)
       .useValue(entityClientMock)
