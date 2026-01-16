@@ -6,7 +6,9 @@ import {
   ENTITY_MICROSERVICE_NAME,
 } from './entity.constans';
 import { EntityMicroserviceResponseDto } from './dtos/entity-microservice-response.dto';
-import { CreateGenericEntityResponseDto } from './dtos/create-generic-entity.response.dto';
+import { CreateGenericEntityMicroserviceResponseDto } from './dtos/create-generic-entity-microservice-response.dto';
+import { UpdateGenericEntityMicroserviceResponseDto } from './dtos/update-generic-entity-microservice-response.dto';
+import { DeleteGenericEntityMicroserviceResponseDto } from './dtos/delete-generic-entity-microservice-response.dto';
 
 @Injectable()
 export class EntityService {
@@ -29,32 +31,44 @@ export class EntityService {
       .toPromise();
   }
 
-  async getEntityById(entityIdToSearch: number): Promise<EntityDto> {
+  async getEntityById(
+    entityIdToSearch: number,
+  ): Promise<EntityMicroserviceResponseDto> {
     const pattern = { cmd: 'get_entity_by_id' };
     return this.client
       .send<EntityMicroserviceResponseDto>(pattern, entityIdToSearch)
       .toPromise();
   }
 
-  createNewEntity = (entityDto: EntityDto) => {
+  createNewEntity(
+    entityDto: EntityDto,
+  ): Promise<CreateGenericEntityMicroserviceResponseDto> {
     const pattern = { cmd: 'create_entity' };
     return this.client
-      .send<CreateGenericEntityResponseDto[]>(pattern, entityDto)
-      .toPromise();
-  };
-
-  editEntityById(entityId: number, entityDto: EntityDto) {
-    const pattern = { cmd: 'edit_entity' };
-    const payload = { entityId: entityId, entityParam: entityDto };
-    return this.client
-      .send<EntityMicroserviceResponseDto[]>(pattern, payload)
+      .send<CreateGenericEntityMicroserviceResponseDto>(pattern, entityDto)
       .toPromise();
   }
 
-  deleteEntityById = (entityIdToDelete: number) => {
+  editEntityById(
+    entityId: number,
+    entityDto: EntityDto,
+  ): Promise<UpdateGenericEntityMicroserviceResponseDto> {
+    const pattern = { cmd: 'edit_entity' };
+    const payload = { entityId: entityId, entityParam: entityDto };
+    return this.client
+      .send<UpdateGenericEntityMicroserviceResponseDto>(pattern, payload)
+      .toPromise();
+  }
+
+  deleteEntityById(
+    entityIdToDelete: number,
+  ): Promise<DeleteGenericEntityMicroserviceResponseDto> {
     const pattern = { cmd: 'delete_entity_by_id' };
     return this.client
-      .send<EntityMicroserviceResponseDto[]>(pattern, entityIdToDelete)
+      .send<DeleteGenericEntityMicroserviceResponseDto>(
+        pattern,
+        entityIdToDelete,
+      )
       .toPromise();
-  };
+  }
 }
