@@ -20,39 +20,45 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: yarn
+          cache: "yarn"
           cache-dependency-path: gateway/yarn.lock
 
-      - name: Enable corepack
-        run: corepack enable
-
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        # Yarn 3+ utiliza --immutable en lugar de --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Run tests
         run: yarn test --coverage
+
   e2e:
     runs-on: ubuntu-latest
     needs: unit_and_integration
     defaults:
       run:
         working-directory: gateway
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: yarn
+          cache: "yarn"
           cache-dependency-path: gateway/yarn.lock
 
-      - run: corepack enable
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Run e2e tests
         run: yarn test:e2e
@@ -100,8 +106,17 @@ jobs:
           "APP_VERSION=${{ env.APP_VERSION }} bash -s" << 'EOF'
             cd ${{ secrets.APP_PATH_GATEWAY }}
             git pull origin master
-            yarn install
+            
+            # Habilitar corepack en el servidor para que reconozca Yarn 3
+            corepack enable
+            
+            # Entrar a la carpeta del proyecto si es necesario
+            cd gateway
+            
+            yarn install --immutable
             yarn build
+            
+            # Reiniciar con PM2
             APP_VERSION=$APP_VERSION pm2 restart nest-api --update-env --node-args="-r newrelic" || \
             APP_VERSION=$APP_VERSION pm2 start dist/main.js --name nest-api --node-args="-r newrelic"
           EOF
