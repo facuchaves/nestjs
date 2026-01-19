@@ -45,6 +45,12 @@ import { RolesGuard } from '../guards/roles.guard';
 import { LoggingInterceptor } from '../interceptors/logging.interceptor';
 import { Cookies } from '../decorators/cookie.decorator';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
+import { CreateGenericEntityMicroserviceResponseDto } from './dtos/create-generic-entity-microservice-response.dto';
+import { UpdateGenericEntityMicroserviceResponseDto } from './dtos/update-generic-entity-microservice-response.dto';
+import { DeleteGenericEntityMicroserviceResponseDto } from './dtos/delete-generic-entity-microservice-response.dto';
+import { CreateGenericEntityResponseDto } from './dtos/create-generic-entity-response.dto';
+import { UpdateGenericEntityResponseDto } from './dtos/update-generic-entity-response.dto';
+import { DeleteGenericEntityResponseDto } from './dtos/delete-generic-entity-response.dto';
 
 @ApiTags('resource')
 @Controller('api/resource')
@@ -116,7 +122,7 @@ export class EntityController {
 
   @UsePipes(new ValidationPipe({ transform: true }))
   @Post()
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({ type: CreateGenericEntityResponseDto })
   @ApiBadRequestResponse({
     description: 'Si un parametro no cumple con la especificacion.',
   })
@@ -124,7 +130,9 @@ export class EntityController {
     summary: 'Creacion de entidad',
     description: 'Crea una entidad.',
   })
-  async createEntity(@Body() entityDto: EntityDto) {
+  async createEntity(
+    @Body() entityDto: EntityDto,
+  ): Promise<CreateGenericEntityResponseDto> {
     return this.service.createNewEntity(entityDto);
   }
 
@@ -134,7 +142,7 @@ export class EntityController {
     required: true,
     description: 'Entity id to update',
   })
-  @ApiOkResponse()
+  @ApiOkResponse({ type: UpdateGenericEntityResponseDto })
   @ApiBadRequestResponse({
     description: 'Si el user con ese id no existe.',
   })
@@ -145,7 +153,7 @@ export class EntityController {
   async editEntity(
     @Param('resourceId', ParseIntPipe) entityId: number,
     @Body() entityDto: EntityDto,
-  ) {
+  ): Promise<UpdateGenericEntityResponseDto> {
     return this.service.editEntityById(entityId, entityDto);
   }
 
@@ -155,7 +163,7 @@ export class EntityController {
     required: true,
     description: 'Entity id to delete',
   })
-  @ApiOkResponse()
+  @ApiOkResponse({ type: DeleteGenericEntityResponseDto })
   @ApiBadRequestResponse({
     description: 'Si no existe entidad con ese id no existe.',
   })
@@ -163,7 +171,9 @@ export class EntityController {
     summary: 'Eliminacion de entidad',
     description: 'Elimina un entidad.',
   })
-  async deleteEntity(@Param('resourceId', ParseIntPipe) entityId: number) {
+  async deleteEntity(
+    @Param('resourceId', ParseIntPipe) entityId: number,
+  ): Promise<DeleteGenericEntityResponseDto> {
     return this.service.deleteEntityById(entityId);
   }
 
