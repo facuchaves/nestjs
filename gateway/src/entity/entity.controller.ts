@@ -74,8 +74,8 @@ export class EntityController {
     description:
       'Devuelve una lista de todos las entidades. Si no hay entidades devuelve una lista vacia',
   })
-  // @CacheKey('custom_key')
-  // @CacheTTL(20)
+  @CacheKey('custom_key')
+  @CacheTTL(20)
   async getAllEntities(): Promise<EntityDto[]> {
     return this.service.getAllEntities();
   }

@@ -9,12 +9,7 @@ import { EntityModule } from './entity/entity.module';
 import { UserMiddleware } from './middlewares/user.middleware';
 
 @Module({
-  imports: [
-    EntityModule,
-    CacheModule.register({
-      ttl: 0,
-    }),
-  ],
+  imports: [EntityModule, CacheModule.register()],
   providers: [Logger],
 })
 export class AppModule implements NestModule {

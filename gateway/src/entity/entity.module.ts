@@ -12,9 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    CacheModule.register({
-      ttl: 0,
-    }),
+    CacheModule.register(),
     // CacheModule.register({
     //   store: redisStore,
     //   host: 'localhost',
