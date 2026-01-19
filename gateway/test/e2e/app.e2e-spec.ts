@@ -33,7 +33,6 @@ describe('AppController (e2e)', () => {
       .compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalInterceptors(); // sin cache
     await app.init();
   });
 
