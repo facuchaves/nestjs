@@ -6,7 +6,7 @@ describe('Roles Guard (Unit)', () => {
   describe('Happy paths', () => {
     it(`should acept user with admin rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: String, any) => ['admin'],
+        get: (propertyName: string, any) => ['admin'],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
@@ -25,7 +25,7 @@ describe('Roles Guard (Unit)', () => {
 
     it(`should deny user with another rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: String, any) => ['admin'],
+        get: (propertyName: string, any) => ['admin'],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
@@ -44,7 +44,7 @@ describe('Roles Guard (Unit)', () => {
 
     it(`should deny user without rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: String, any) => ['admin'],
+        get: (propertyName: string, any) => ['admin'],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
@@ -63,7 +63,7 @@ describe('Roles Guard (Unit)', () => {
 
     it(`should accept user without rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: String, any) => [],
+        get: (propertyName: string, any) => [],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);

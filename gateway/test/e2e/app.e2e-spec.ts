@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { CacheInterceptor, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
@@ -6,8 +6,7 @@ import {
   ENTITY_MICROSERVICE_LOCAL_NAME,
   ENTITY_MICROSERVICE_NAME,
 } from '../../src/entity/entity.constans';
-import { of, throwError } from 'rxjs';
-import { UpdateGenericEntityResponseDto } from 'src/entity/dtos/update-generic-entity-response.dto';
+import { of } from 'rxjs';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
