@@ -113,9 +113,12 @@ jobs:
             # Entrar a la carpeta del proyecto si es necesario
             cd gateway
             
-            yarn install --immutable
-            yarn build
+            #yarn install --immutable
+            #yarn build
             
+            npm install
+            npm run build
+
             # Reiniciar con PM2
             APP_VERSION=$APP_VERSION pm2 restart nest-api --update-env --node-args="-r newrelic" || \
             APP_VERSION=$APP_VERSION pm2 start dist/main.js --name nest-api --node-args="-r newrelic"
