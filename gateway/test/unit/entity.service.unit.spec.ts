@@ -4,13 +4,13 @@ import { EntityDto } from '../../src/entity/dtos/entity.dto';
 import { EntityService } from '../../src/entity/entity.service';
 
 describe('Entity service (Unit)', () => {
-  let clientProxy: ClientProxy = {
-    send: (pattern: any, data: any) => new Observable(),
+  const clientProxy: ClientProxy = {
+    send: (_pattern: any, _data: any) => new Observable(),
   } as ClientProxy;
-  let clientProxyLocal: ClientProxy = {
-    send: (pattern: any, data: any) => new Observable(),
+  const clientProxyLocal: ClientProxy = {
+    send: (_pattern: any, _data: any) => new Observable(),
   } as ClientProxy;
-  let entityService: EntityService = new EntityService(
+  const entityService: EntityService = new EntityService(
     clientProxy,
     clientProxyLocal,
   );

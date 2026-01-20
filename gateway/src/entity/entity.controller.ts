@@ -6,9 +6,7 @@ import {
   Controller,
   Delete,
   Get,
-  Headers,
   HttpException,
-  Inject,
   Logger,
   Param,
   ParseIntPipe,
@@ -45,9 +43,6 @@ import { RolesGuard } from '../guards/roles.guard';
 import { LoggingInterceptor } from '../interceptors/logging.interceptor';
 import { Cookies } from '../decorators/cookie.decorator';
 import { HttpExceptionFilter } from '../filters/http-exception.filter';
-import { CreateGenericEntityMicroserviceResponseDto } from './dtos/create-generic-entity-microservice-response.dto';
-import { UpdateGenericEntityMicroserviceResponseDto } from './dtos/update-generic-entity-microservice-response.dto';
-import { DeleteGenericEntityMicroserviceResponseDto } from './dtos/delete-generic-entity-microservice-response.dto';
 import { CreateGenericEntityResponseDto } from './dtos/create-generic-entity-response.dto';
 import { UpdateGenericEntityResponseDto } from './dtos/update-generic-entity-response.dto';
 import { DeleteGenericEntityResponseDto } from './dtos/delete-generic-entity-response.dto';

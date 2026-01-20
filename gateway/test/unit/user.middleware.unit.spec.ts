@@ -12,7 +12,7 @@ describe('User middleware (Unit)', () => {
         },
       };
 
-      userMiddleware.use(req as any, {} as Response, () => {});
+      userMiddleware.use(req as any, {} as Response, jest.fn());
 
       expect(req['user']).toStrictEqual({ name: 'UserNameReq' });
     });
@@ -20,14 +20,14 @@ describe('User middleware (Unit)', () => {
     it(`should fill res`, async () => {
       const res: Response = {} as Response;
 
-      userMiddleware.use({ headers: {} } as Request, res, () => {});
+      userMiddleware.use({ headers: {} } as Request, res, jest.fn());
 
       expect(res['user']).toStrictEqual({ name: 'UserNameRes' });
     });
 
     it(`should call next()`, async () => {
       const mockedObject = {
-        mockedMethod: () => {},
+        mockedMethod: jest.fn(),
       };
 
       const funtionSpies = jest.spyOn(mockedObject, 'mockedMethod');
