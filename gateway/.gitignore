@@ -36,3 +36,10 @@ lerna-debug.log*
 #env
 .env
  
+# Certificates / secrets
+*.key
+*.cert
+*.pem
+
+# CI / test artifacts
+# VER ESTO junit.xml
