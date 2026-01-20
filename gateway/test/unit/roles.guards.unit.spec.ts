@@ -6,76 +6,76 @@ describe('Roles Guard (Unit)', () => {
   describe('Happy paths', () => {
     it(`should acept user with admin rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: string, any) => ['admin'],
+        get: (_propertyName: string, _any) => ['admin'],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
 
-      const context: ExecutionContext = {
+      const context: ExecutionContext = ({
         switchToHttp: () => ({
           getRequest: () => {
             return { user: { roles: ['admin'] } };
           },
         }),
-        getHandler: () => {},
-      } as ExecutionContext;
+        getHandler: jest.fn(),
+      } as unknown) as ExecutionContext;
 
       expect(rolesGuard.canActivate(context)).toBeTruthy();
     });
 
     it(`should deny user with another rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: string, any) => ['admin'],
+        get: (_propertyName: string, _any) => ['admin'],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
 
-      const context: ExecutionContext = {
+      const context: ExecutionContext = ({
         switchToHttp: () => ({
           getRequest: () => {
             return { user: { roles: ['ro'] } };
           },
         }),
-        getHandler: () => {},
-      } as ExecutionContext;
+        getHandler: jest.fn(),
+      } as unknown) as ExecutionContext;
 
       expect(rolesGuard.canActivate(context)).toBeFalsy();
     });
 
     it(`should deny user without rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: string, any) => ['admin'],
+        get: (_propertyName: string, _any) => ['admin'],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
 
-      const context: ExecutionContext = {
+      const context: ExecutionContext = ({
         switchToHttp: () => ({
           getRequest: () => {
             return { user: { roles: [] } };
           },
         }),
-        getHandler: () => {},
-      } as ExecutionContext;
+        getHandler: jest.fn(),
+      } as unknown) as ExecutionContext;
 
       expect(rolesGuard.canActivate(context)).toBeFalsy();
     });
 
     it(`should accept user without rol`, async () => {
       const reflector: Reflector = {
-        get: (propertyName: string, any) => [],
+        get: (_propertyName: string, _any) => [],
       } as Reflector;
 
       const rolesGuard: RolesGuard = new RolesGuard(reflector);
 
-      const context: ExecutionContext = {
+      const context: ExecutionContext = ({
         switchToHttp: () => ({
           getRequest: () => {
             return { user: { roles: [] } };
           },
         }),
-        getHandler: () => {},
-      } as ExecutionContext;
+        getHandler: jest.fn(),
+      } as unknown) as ExecutionContext;
 
       expect(rolesGuard.canActivate(context)).toBeTruthy();
     });

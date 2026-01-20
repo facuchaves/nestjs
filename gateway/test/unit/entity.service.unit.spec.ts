@@ -5,10 +5,10 @@ import { EntityService } from '../../src/entity/entity.service';
 
 describe('Entity service (Unit)', () => {
   const clientProxy: ClientProxy = {
-    send: (pattern: any, data: any) => new Observable(),
+    send: (_pattern: any, _data: any) => new Observable(),
   } as ClientProxy;
   const clientProxyLocal: ClientProxy = {
-    send: (pattern: any, data: any) => new Observable(),
+    send: (_pattern: any, _data: any) => new Observable(),
   } as ClientProxy;
   const entityService: EntityService = new EntityService(
     clientProxy,
